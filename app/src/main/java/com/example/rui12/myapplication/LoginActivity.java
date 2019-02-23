@@ -24,6 +24,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout register_content;
     private EditText user_name;
     private EditText user_password;
+    private EditText user_phone;
+    private EditText user_code;
 
     static int LOGIN_STATUS = 1;//初始化登录状态为1，1表示账号密码登录，2表示短信登录/注册
     private long exitTime = 0; //再按一次退出的间隔时间
@@ -47,6 +49,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user_name = findViewById(R.id.user_name);
         user_password = findViewById(R.id.user_password);
         hint = findViewById(R.id.hint);
+        user_phone = findViewById(R.id.user_phone);
+        user_code = findViewById(R.id.user_code);
 
         //初始化登录界面为账号密码登录
         login_content.setVisibility(View.VISIBLE);
@@ -88,18 +92,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.get_code:
+                String phone = user_phone.getText().toString();
+
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //双击返回键退出应用
         if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
             if((System.currentTimeMillis()-exitTime) > 2000){
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
-//                System.exit(0);
             }
             return true;
         }

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/user_name"
+                android:id="@+id/user_phone"
                 android:hint="手机号"
                 android:inputType="text"
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/user_password"
+            android:id="@+id/user_code"
             android:hint="验证码"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
