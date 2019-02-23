@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginStart="35dp"
+    android:layout_marginEnd="35dp"
     tools:context=".LoginActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="欢迎登录心愿账号"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"/>
+
+    <include
+        android:id="@+id/login_content"
+        layout="@layout/login_content"/>
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/register_content"
+        layout="@layout/register_content"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorDarkGray"
+            android:text="忘记密码"/>
+
+    </LinearLayout>
+
+</LinearLayout>

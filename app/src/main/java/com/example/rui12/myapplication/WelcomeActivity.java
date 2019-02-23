@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
             super.handleMessage(msg);
