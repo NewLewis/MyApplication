@@ -1,18 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_above="@id/line"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:background="@color/colorDarkGray"
+        android:layout_above="@+id/bottom"
+        android:layout_height="0.1dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:id="@+id/ll_square"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_square"
+                android:background="@drawable/square_black"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/tv_square"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="广场"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_message"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_message"
+                android:background="@drawable/message_black"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="消息"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_myself"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_myself"
+                android:background="@drawable/myself_black"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/tv_myself"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="个人"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

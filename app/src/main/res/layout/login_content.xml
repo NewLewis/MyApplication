@@ -12,7 +12,6 @@
             android:id="@+id/user_name"
             android:hint="用户名/手机号"
             android:inputType="text"
-            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -26,7 +25,7 @@
         <EditText
             android:id="@+id/user_password"
             android:hint="密码"
-            android:textSize="20sp"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

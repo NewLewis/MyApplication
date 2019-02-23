@@ -30,18 +30,52 @@
         android:id="@+id/register_content"
         layout="@layout/register_content"/>
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
+    <TextView
+        android:id="@+id/hint"
+        android:visibility="invisible"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户名或密码错误"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/msg_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/colorDarkGray"
-            android:text="忘记密码"/>
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:text="短信快捷登录"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/forget_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/bt_login"
+        android:background="@drawable/login_shape"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:text="登录"
+        android:textColor="@color/colorWhite"
+        android:textSize="23sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
