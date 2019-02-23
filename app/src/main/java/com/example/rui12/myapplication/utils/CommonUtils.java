@@ -2,6 +2,9 @@ package com.example.rui12.myapplication.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 
 public class CommonUtils {
     public void setStatusBar(Activity activity){
@@ -16,5 +19,13 @@ public class CommonUtils {
             //这样半透明+白=灰, 状态栏的文字能看得清
             StatusBarUtil.setStatusBarColor(activity,0x55000000);
         }
+    }
+
+    public Drawable toDrawable(Activity activity,int id){
+        return ContextCompat.getDrawable(activity,id);
+    }
+
+    public int colorToInt(Activity activity,int id){
+        return ContextCompat.getColor(activity,id);
     }
 }
