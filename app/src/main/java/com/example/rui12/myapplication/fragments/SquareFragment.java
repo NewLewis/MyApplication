@@ -3,12 +3,25 @@ package com.example.rui12.myapplication.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.adapter.FragmentAdapter;
+import com.example.rui12.myapplication.adapter.RecyclerViewPagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +40,8 @@ public class SquareFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +80,38 @@ public class SquareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_square, container, false);
+        View view = inflater.inflate(R.layout.fragment_square, container, false);
+        init(view);
+        return view;
+    }
+
+    private void init(View view){
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        final ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        viewPager = view.findViewById(R.id.viewpager);
+        initViewPager(view);
+    }
+
+    private void initViewPager(View view){
+        tabLayout = view.findViewById(R.id.tabLayout);
+        List<String> titles = new ArrayList<>();
+        titles.add("自力更生");
+        titles.add("互帮互助");
+
+        for(int i=0;i<titles.size();i++){
+            tabLayout.addTab(tabLayout.newTab().setText(titles.get(i)));
+        }
+        List<Fragment> fragments = new ArrayList<>();
+        for(int i=0;i<titles.size();i++){
+            fragments.add(new RecyclerViewFragment());
+        }
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getChildFragmentManager(),fragments,titles);
+        //给viewpager设置适配器
+        viewPager.setAdapter(fragmentAdapter);
+        //将tabLayout和viewpager关联起来
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

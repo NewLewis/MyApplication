@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FloatActionButtonColor" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorAccent">@color/colorOrange</item>
+    </style>
+
 </resources>
