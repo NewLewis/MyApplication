@@ -3,6 +3,7 @@ package com.example.rui12.myapplication.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.adapter.FragmentAdapter;
 import com.example.rui12.myapplication.adapter.RecyclerViewPagerAdapter;
+import com.jaeger.ninegridimageview.NineGridImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,10 +88,6 @@ public class SquareFragment extends Fragment {
     }
 
     private void init(View view){
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        final ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         viewPager = view.findViewById(R.id.viewpager);
         initViewPager(view);
     }

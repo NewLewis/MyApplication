@@ -40,8 +40,8 @@
             <ImageView
                 android:id="@+id/iv_square"
                 android:background="@drawable/square_black"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
 
             <TextView
                 android:id="@+id/tv_square"
@@ -65,8 +65,8 @@
             <ImageView
                 android:id="@+id/iv_message"
                 android:background="@drawable/message_black"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
 
             <TextView
                 android:id="@+id/tv_message"
@@ -90,8 +90,8 @@
             <ImageView
                 android:id="@+id/iv_myself"
                 android:background="@drawable/myself_black"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
 
             <TextView
                 android:id="@+id/tv_myself"

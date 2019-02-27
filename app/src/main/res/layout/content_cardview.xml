@@ -8,8 +8,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/cardMarginVertical"
         android:layout_marginLeft="@dimen/cardMarginHorizontal"
         android:layout_marginRight="@dimen/cardMarginHorizontal"
@@ -21,10 +21,59 @@
         android:foreground="?android:attr/selectableItemBackgroundBorderless"
         app:contentPadding="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我是cardView"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.example.rui12.myapplication.view.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/header"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="奥利奥蘸墨水"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/post_time"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1分钟前"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.jaeger.ninegridimageview.NineGridImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/nine_image"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                app:imgGap="4dp"
+                app:showStyle="fill"
+                app:singleImgSize="120dp"/>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
