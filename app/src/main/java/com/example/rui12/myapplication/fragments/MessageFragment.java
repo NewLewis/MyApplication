@@ -4,11 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.adapter.RecyclerViewMessageAdapter;
+import com.example.rui12.myapplication.model.MessageModel;
+import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +73,25 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
+        init(view);
+        return view;
+    }
+
+    private void init(View view){
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+
+        //添加message样例
+        List<MessageModel> messageModels = new ArrayList<>();
+        for(int i=0;i<5;i++){
+            messageModels.add(new MessageModel("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551290161697&di=b712005413d62e65be7c085ac8236573&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Farticle%2F2017%2F0110%2F091942_18858530.jpg",
+                    "问酥肉test_name",
+                    "我好想你啊"));
+        }
+        RecyclerViewMessageAdapter recyclerViewMessageAdapter = new RecyclerViewMessageAdapter(getActivity(),messageModels);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+        recyclerView.setAdapter(recyclerViewMessageAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

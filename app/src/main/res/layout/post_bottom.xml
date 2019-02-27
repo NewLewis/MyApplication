@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:layout_marginStart="60dp"
+        android:id="@+id/ib_collect"
+        android:layout_alignParentStart="true"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/collect_black"/>
+
+    <LinearLayout
+        android:id="@+id/ll_like"
+        android:layout_toStartOf="@id/ll_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ib_like"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/like_black"/>
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.7k"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_review"
+        android:layout_marginStart="20dp"
+        android:layout_toStartOf="@id/ib_transmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ib_review"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/review_black" />
+
+        <TextView
+            android:id="@+id/tv_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="102"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="20dp"
+        android:id="@+id/ib_transmit"
+        android:layout_alignParentEnd="true"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/transmit_black" />
+
+</RelativeLayout>

@@ -19,9 +19,6 @@ import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewPagerAdapter extends RecyclerView.Adapter<RecyclerViewPagerAdapter.NIHolder>{
@@ -54,7 +51,7 @@ public class RecyclerViewPagerAdapter extends RecyclerView.Adapter<RecyclerViewP
     }
 
 
-    public void Remove(int position){
+    public void remove(int position){
         dreamModelList.remove(position);
         notifyItemRemoved(position);
     }
