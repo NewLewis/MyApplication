@@ -31,18 +31,20 @@
 
             <TextView
                 android:id="@+id/user_name"
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="温酥肉"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"/>
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/latest_msg"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我好喜欢你啊，宝贝！"/>
+                android:text="我好喜欢你啊，宝贝！"
+                android:textSize="12sp" />
 
         </LinearLayout>
     </LinearLayout>

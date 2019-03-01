@@ -33,9 +33,10 @@
         <TextView
             android:id="@+id/tv_like"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="2.7k"
-            android:textSize="18sp"/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 
@@ -56,9 +57,10 @@
         <TextView
             android:id="@+id/tv_review"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="102"
-            android:textSize="18sp"/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 

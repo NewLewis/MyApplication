@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.adapter.RecyclerViewMessageAdapter;
@@ -17,6 +19,8 @@ import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDeco
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,8 +93,29 @@ public class MessageFragment extends Fragment {
                     "我好想你啊"));
         }
         RecyclerViewMessageAdapter recyclerViewMessageAdapter = new RecyclerViewMessageAdapter(getActivity(),messageModels);
+        recyclerViewMessageAdapter.setmOnItemClickListener(new RecyclerViewMessageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerViewMessageAdapter.ViewName viewName,int position) {
+                switch (view.getId()){
+                    case R.id.civ_header:
+                        Toast.makeText(getContext(),"点击了头像:" + position,Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onItemClick: 点击了头像:" + position);
+                        break;
+                    default:
+                        Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onItemClick: 点击了item:" + position);
+                        break;
+                }
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+                Toast.makeText(getContext(),"长按了item:" + position,Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onItemLongClick: 长按了item:" + position);
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+//        recyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         recyclerView.setAdapter(recyclerViewMessageAdapter);
     }
 
