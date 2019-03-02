@@ -3,12 +3,24 @@ package com.example.rui12.myapplication.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.adapter.PostAdapter;
+import com.example.rui12.myapplication.model.PostModel;
+import com.example.rui12.myapplication.utils.AppBarStateChangeListener;
+import com.example.rui12.myapplication.utils.CommonUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +39,9 @@ public class MyselfFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView recyclerView;
+    private AppBarLayout appBarLayout;
+    private ImageButton ib_setting;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +80,44 @@ public class MyselfFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_myself, container, false);
+        View view = inflater.inflate(R.layout.fragment_myself, container, false);
+        init(view);
+        return view;
+    }
+
+
+    private void init(View view){
+        //绑定控件
+        recyclerView = view.findViewById(R.id.recyclerView);
+        appBarLayout = view.findViewById(R.id.appbarLayout);
+        ib_setting = view.findViewById(R.id.ib_setting);
+
+        //设置recyclerView的adapter
+        List<PostModel> postModelList = new ArrayList<>();
+        for(int i=1;i<=9;i++){
+            postModelList.add(new PostModel("插本广美成功^_^","2019-02-0" + i,i%3));
+        }
+        PostAdapter postAdapter = new PostAdapter(getActivity(),postModelList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(postAdapter);
+
+        //设置appbarLayout的监听事件
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                Log.d("STATE", state.name());
+                if( state == State.EXPANDED ) {
+                    //展开状态
+                    ib_setting.setBackground((new CommonUtils()).toDrawable(getActivity(),R.drawable.setting_white));
+                }else if(state == State.COLLAPSED){
+                    //折叠状态
+                    ib_setting.setBackground((new CommonUtils()).toDrawable(getActivity(),R.drawable.setting_black));
+                }else {
+                    //中间状态
+                    ib_setting.setBackground((new CommonUtils()).toDrawable(getActivity(),R.drawable.setting_white)) ;
+                }
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

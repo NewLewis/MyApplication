@@ -35,8 +35,7 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        final ViewHolder viewHolder = new RecyclerViewMessageAdapter.ViewHolder(mInflater.inflate(R.layout.item_message,viewGroup, false));
-        return viewHolder;
+        return new RecyclerViewMessageAdapter.ViewHolder(mInflater.inflate(R.layout.item_message,viewGroup, false));
     }
 
     @Override

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:elevation="2dp">
+
+    <LinearLayout
+        android:layout_marginStart="20dp"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_gravity="center"
+            android:layout_width="1dp"
+            android:background="@color/colorDarkGray"
+            android:layout_height="30dp"/>
+
+        <ImageView
+            android:id="@+id/circle"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_green"/>
+
+        <View
+            android:layout_gravity="center"
+            android:layout_width="1dp"
+            android:background="@color/colorDarkGray"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:id="@+id/dream_name"
+            android:maxEms="6"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="插本广美成功！"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"/>
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/publish_time"
+            android:layout_below="@id/dream_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布时间： 2018-02-06"
+            android:textSize="15sp"/>
+
+
+        <TextView
+            android:id="@+id/dream_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="实现"
+            android:textColor="@color/green_teal"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>
