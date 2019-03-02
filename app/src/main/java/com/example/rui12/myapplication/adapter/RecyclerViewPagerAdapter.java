@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.model.DreamModel;
 import com.example.rui12.myapplication.model.PhotoModel;
-import com.jaeger.ninegridimageview.ItemImageClickListener;
-import com.jaeger.ninegridimageview.ItemImageLongClickListener;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.squareup.picasso.Picasso;
@@ -28,11 +26,13 @@ public class RecyclerViewPagerAdapter extends RecyclerView.Adapter<RecyclerViewP
     private LayoutInflater mInflater;
     private List<DreamModel> dreamModelList;
     private OnItemClickListener mOnItemClickListener = null;
+    private Context context;
 
     public RecyclerViewPagerAdapter(Context context, List<DreamModel> dreamModelList, int showStyle) {
         super();
         this.dreamModelList = dreamModelList;
         this.mInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     public int getItemCount() {
@@ -110,12 +110,14 @@ public class RecyclerViewPagerAdapter extends RecyclerView.Adapter<RecyclerViewP
             @Override
             protected boolean onItemImageLongClick(Context context, ImageView imageView, int index, List<PhotoModel> list) {
                 Log.d(TAG, "onItemImageLongClick: 长按图片item");
+                Toast.makeText(context,"长按图片item",Toast.LENGTH_SHORT).show();
                 return super.onItemImageLongClick(context, imageView, index, list);
             }
 
             @Override
             protected void onItemImageClick(Context context, ImageView imageView, int index, List<PhotoModel> list) {
                 Log.d(TAG, "onItemImageClick: 点击图片item");
+                Toast.makeText(context,"点击图片item",Toast.LENGTH_SHORT).show();
                 super.onItemImageClick(context, imageView, index, list);
             }
         };
@@ -124,19 +126,9 @@ public class RecyclerViewPagerAdapter extends RecyclerView.Adapter<RecyclerViewP
             super(itemView);
             user_name = itemView.findViewById(R.id.user_name);
             nineGridImageView = itemView.findViewById(R.id.nine_image);
-            nineGridImageView.setAdapter(mAdapter);
-            nineGridImageView.setItemImageClickListener(new ItemImageClickListener<PhotoModel>() {
-                @Override
-                public void onItemImageClick(Context context, ImageView imageView, int index, List<PhotoModel> list) {
 
-                }
-            });
-            nineGridImageView.setItemImageLongClickListener(new ItemImageLongClickListener<PhotoModel>() {
-                @Override
-                public boolean onItemImageLongClick(Context context, ImageView imageView, int index, List<PhotoModel> list) {
-                    return false;
-                }
-            });
+            //设置nineGridImageView的adapter
+            nineGridImageView.setAdapter(mAdapter);
         }
     }
 }

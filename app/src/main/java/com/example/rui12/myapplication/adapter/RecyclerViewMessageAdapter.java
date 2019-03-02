@@ -17,8 +17,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
-
 
 public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerViewMessageAdapter.ViewHolder> implements View.OnClickListener{
 
@@ -69,9 +67,10 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
         notifyItemRemoved(position);
     }
 
+    //用一个枚举类型来表示不同的view
     public enum ViewName{
         ITEM,
-        PRACTICE
+        HEADER
     }
 
     public static interface OnItemClickListener {
@@ -109,8 +108,7 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
         switch (v.getId()){
             case R.id.civ_header:
                 //这是头像的点击事件
-//                Toast.makeText( context,"点击了头像",Toast.LENGTH_SHORT).show();
-                mOnItemClickListener.onItemClick(v,ViewName.PRACTICE,position);
+                mOnItemClickListener.onItemClick(v,ViewName.HEADER,position);
                 break;
             default:
                 //默认是整个item的点击事件

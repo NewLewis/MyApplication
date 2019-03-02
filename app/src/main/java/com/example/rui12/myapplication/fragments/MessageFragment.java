@@ -3,6 +3,7 @@ package com.example.rui12.myapplication.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,7 +75,7 @@ public class MessageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
@@ -107,15 +108,16 @@ public class MessageFragment extends Fragment {
                         break;
                 }
             }
-
+            //item的长按点击事件
             @Override
             public void onItemLongClick(int position) {
                 Toast.makeText(getContext(),"长按了item:" + position,Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onItemLongClick: 长按了item:" + position);
             }
         });
+        //设置布局格式
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+        //给recyclerView设置adapter
         recyclerView.setAdapter(recyclerViewMessageAdapter);
     }
 
