@@ -20,13 +20,13 @@
             android:fitsSystemWindows="true"
             app:collapsedTitleGravity="center"
             app:contentScrim="@color/colorWhite"
+            app:expandedTitleGravity="bottom|left"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:background="@drawable/bg2"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7"
                 android:layout_height="300dp">
 
                 <LinearLayout
@@ -70,8 +70,21 @@
                 android:layout_height="?attr/actionBarSize">
 
                 <RelativeLayout
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/myself_title"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="0dp"
+                        android:text="心愿广场"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp" />
 
                     <ImageButton
                         android:id="@+id/ib_setting"

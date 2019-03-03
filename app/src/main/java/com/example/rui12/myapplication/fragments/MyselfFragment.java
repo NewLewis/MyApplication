@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.adapter.PostAdapter;
@@ -41,7 +43,9 @@ public class MyselfFragment extends Fragment {
     private String mParam2;
     private RecyclerView recyclerView;
     private AppBarLayout appBarLayout;
+    private TextView title;
     private ImageButton ib_setting;
+    private CommonUtils commonUtils = new CommonUtils();
 
     private OnFragmentInteractionListener mListener;
 
@@ -91,6 +95,8 @@ public class MyselfFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         appBarLayout = view.findViewById(R.id.appbarLayout);
         ib_setting = view.findViewById(R.id.ib_setting);
+//        collapsingToolbarLayout = view.findViewById(R.id.toolbar_layout);
+        title = view.findViewById(R.id.myself_title);
 
         //设置recyclerView的adapter
         List<PostModel> postModelList = new ArrayList<>();
@@ -108,13 +114,22 @@ public class MyselfFragment extends Fragment {
                 Log.d("STATE", state.name());
                 if( state == State.EXPANDED ) {
                     //展开状态
-                    ib_setting.setBackground((new CommonUtils()).toDrawable(getActivity(),R.drawable.setting_white));
+                    //展开状态的时候设置setting图标为白色
+                    ib_setting.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.setting_white));
+//                    collapsingToolbarLayout.setTitle("");
+                    title.setVisibility(View.INVISIBLE);
                 }else if(state == State.COLLAPSED){
                     //折叠状态
-                    ib_setting.setBackground((new CommonUtils()).toDrawable(getActivity(),R.drawable.setting_black));
+                    //设置setting图标为黑色
+                    ib_setting.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.setting_black));
+//                    collapsingToolbarLayout.setTitle("个人中心");
+                    title.setText("个人中心");
+                    title.setVisibility(View.VISIBLE);
                 }else {
                     //中间状态
-                    ib_setting.setBackground((new CommonUtils()).toDrawable(getActivity(),R.drawable.setting_white)) ;
+                    ib_setting.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.setting_white));
+//                    collapsingToolbarLayout.setTitle("");
+                    title.setVisibility(View.INVISIBLE);
                 }
             }
         });
