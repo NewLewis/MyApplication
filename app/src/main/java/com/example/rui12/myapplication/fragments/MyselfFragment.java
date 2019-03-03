@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
@@ -32,7 +33,7 @@ import java.util.List;
  * Use the {@link MyselfFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyselfFragment extends Fragment {
+public class MyselfFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,6 +46,7 @@ public class MyselfFragment extends Fragment {
     private AppBarLayout appBarLayout;
     private TextView title;
     private ImageButton ib_setting;
+    private ImageButton ib_status;
     private CommonUtils commonUtils = new CommonUtils();
 
     private OnFragmentInteractionListener mListener;
@@ -95,8 +97,12 @@ public class MyselfFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         appBarLayout = view.findViewById(R.id.appbarLayout);
         ib_setting = view.findViewById(R.id.ib_setting);
-//        collapsingToolbarLayout = view.findViewById(R.id.toolbar_layout);
+        ib_status = view.findViewById(R.id.ib_status);
         title = view.findViewById(R.id.myself_title);
+
+//        //初始化popupWindow
+//        initPopupWindow();
+        setOnClickListener();
 
         //设置recyclerView的adapter
         List<PostModel> postModelList = new ArrayList<>();
@@ -116,23 +122,46 @@ public class MyselfFragment extends Fragment {
                     //展开状态
                     //展开状态的时候设置setting图标为白色
                     ib_setting.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.setting_white));
-//                    collapsingToolbarLayout.setTitle("");
+                    ib_status.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.xuanxiang_white));
                     title.setVisibility(View.INVISIBLE);
                 }else if(state == State.COLLAPSED){
                     //折叠状态
                     //设置setting图标为黑色
                     ib_setting.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.setting_black));
-//                    collapsingToolbarLayout.setTitle("个人中心");
+                    ib_status.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.xuanxiang_black));
+                    //title设置
                     title.setText("个人中心");
                     title.setVisibility(View.VISIBLE);
                 }else {
                     //中间状态
                     ib_setting.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.setting_white));
-//                    collapsingToolbarLayout.setTitle("");
+                    ib_status.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.xuanxiang_white));
                     title.setVisibility(View.INVISIBLE);
                 }
             }
         });
+    }
+
+    private void setOnClickListener(){
+        ib_status.setOnClickListener(this);
+    }
+
+    //显示popupWindow
+    private void showPopupWindow(){
+        View contentView = LayoutInflater.from((getActivity())).inflate(R.layout.content_popupwindow, null);
+        PopupWindow popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,true);
+        popupWindow.showAsDropDown(ib_status,-210,-30);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ib_status: //选项按钮被点击
+                showPopupWindow();
+                break;
+            default:
+                break;
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -95,6 +95,15 @@
                         android:layout_height="35dp"
                         android:background="@drawable/setting_white"/>
 
+                    <ImageButton
+                        android:id="@+id/ib_status"
+                        android:layout_toStartOf="@id/ib_setting"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/xuanxiang_white"/>
+
                 </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
