@@ -38,4 +38,8 @@ dependencies {
     implementation 'com.jaeger.ninegridimageview:library:1.1.1'
     //picasso图片加载库
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    //smartRefreshLayout下拉刷新框架的依赖(核心)
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+    //smartRefreshLayout下拉刷新框架的依赖(各种header)
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'
 }
