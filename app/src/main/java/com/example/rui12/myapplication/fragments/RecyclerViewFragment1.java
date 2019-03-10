@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.rui12.myapplication.R;
-import com.example.rui12.myapplication.adapter.RecyclerViewPagerAdapter;
+import com.example.rui12.myapplication.adapter.RecyclerViewPagerAdapter1;
 import com.example.rui12.myapplication.model.DreamModel;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -25,8 +25,8 @@ import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class RecyclerViewFragment extends Fragment {
-    public static Fragment newInstance(){return  new RecyclerViewFragment();}
+public class RecyclerViewFragment1 extends Fragment {
+    public static Fragment newInstance(){return  new RecyclerViewFragment1();}
     final List<DreamModel> items = new ArrayList<>();
     static final int ITEMS = 9;
 
@@ -74,9 +74,9 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         //初始化一个adapter
-        RecyclerViewPagerAdapter recyclerViewPagerAdapter = new RecyclerViewPagerAdapter(getActivity(),items,2);
+        RecyclerViewPagerAdapter1 recyclerViewPagerAdapter1 = new RecyclerViewPagerAdapter1(getActivity(),items,2);
         //设置adapter的点击事件
-        recyclerViewPagerAdapter.setmOnItemClickListener(new RecyclerViewPagerAdapter.OnItemClickListener() {
+        recyclerViewPagerAdapter1.setmOnItemClickListener(new RecyclerViewPagerAdapter1.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
@@ -89,6 +89,6 @@ public class RecyclerViewFragment extends Fragment {
                 Log.d(TAG, "onItemLongClick: 长按了item:" + position);
             }
         });
-        mRecyclerView.setAdapter(recyclerViewPagerAdapter);
+        mRecyclerView.setAdapter(recyclerViewPagerAdapter1);
     }
 }

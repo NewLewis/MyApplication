@@ -66,12 +66,13 @@
 
 
     <ImageButton
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="20dp"
         android:id="@+id/ib_transmit"
         android:layout_alignParentEnd="true"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/transmit_black" />
 
 </RelativeLayout>

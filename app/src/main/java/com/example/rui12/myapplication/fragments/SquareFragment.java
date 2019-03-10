@@ -3,15 +3,9 @@ package com.example.rui12.myapplication.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +13,6 @@ import android.view.ViewGroup;
 
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.adapter.FragmentAdapter;
-import com.example.rui12.myapplication.adapter.RecyclerViewPagerAdapter;
-import com.jaeger.ninegridimageview.NineGridImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,9 +94,11 @@ public class SquareFragment extends Fragment {
             tabLayout.addTab(tabLayout.newTab().setText(titles.get(i)));
         }
         List<Fragment> fragments = new ArrayList<>();
-        for(int i=0;i<titles.size();i++){
-            fragments.add(new RecyclerViewFragment());
-        }
+//        for(int i=0;i<titles.size();i++){
+//            fragments.add(new RecyclerViewFragment1());
+//        }
+        fragments.add(new RecyclerViewFragment1());
+        fragments.add(new RecyclerViewFragment2());
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getChildFragmentManager(),fragments,titles);
         //给viewpager设置适配器
         viewPager.setAdapter(fragmentAdapter);
