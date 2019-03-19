@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <com.example.rui12.myapplication.view.CircleImageView
+            android:layout_marginStart="20dp"
+            android:id="@+id/civ_header"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/header"/>
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/civ_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="奥利奥蘸墨水"
+            android:textColor="@color/green_teal"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@问酥肉"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/tv_username"
+            android:layout_toEndOf="@id/civ_header"
+            android:textSize="12sp"
+            android:textColor="@color/blue"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tv_other"
+            android:layout_toEndOf="@id/civ_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爱上对方拉伸的感觉饭卡介绍个好地方空间爱上给对方空间阿克苏的发挥噶就是对华国锋金卡"
+            android:textColor="@color/colorBlack"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_like"
+            android:layout_marginStart="30dp"
+            android:layout_toStartOf="@id/ll_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ib_like"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/like_black"/>
+
+            <TextView
+                android:id="@+id/tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="2.7k"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_review"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ib_review"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/xiaoxi" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

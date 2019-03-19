@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
     android:layout_marginTop="10dp"
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
@@ -10,15 +11,15 @@
     android:orientation="horizontal">
 
     <ImageButton
-        android:layout_marginStart="60dp"
         android:id="@+id/ib_collect"
-        android:layout_alignParentStart="true"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_toStartOf="@id/ll_like"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:background="@drawable/collect_black"/>
 
     <LinearLayout
         android:id="@+id/ll_like"
+        android:layout_marginStart="30dp"
         android:layout_toStartOf="@id/ll_review"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,16 +44,17 @@
     <LinearLayout
         android:id="@+id/ll_review"
         android:layout_marginStart="20dp"
-        android:layout_toStartOf="@id/ib_transmit"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/ib_review"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/review_black" />
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="@drawable/xiaoxi" />
 
         <TextView
             android:id="@+id/tv_review"
@@ -63,16 +65,5 @@
             android:textSize="14sp"/>
 
     </LinearLayout>
-
-
-    <ImageButton
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="20dp"
-        android:id="@+id/ib_transmit"
-        android:layout_alignParentEnd="true"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/transmit_black" />
 
 </RelativeLayout>

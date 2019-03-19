@@ -1,5 +1,6 @@
 package com.example.rui12.myapplication.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.ShowPostActivity;
 import com.example.rui12.myapplication.adapter.RecyclerViewPagerAdapter1;
 import com.example.rui12.myapplication.model.DreamModel;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
@@ -81,6 +83,8 @@ public class RecyclerViewFragment1 extends Fragment {
             public void onItemClick(int position) {
                 Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onItemClick: 点击了item:" + position);
+                Intent intent = new Intent(getActivity(), ShowPostActivity.class);
+                startActivity(intent);
             }
 
             @Override
