@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rui12.myapplication.adapter.RecyclerViewReviewAdapter;
+import com.example.rui12.myapplication.adapter.ReviewAdapter;
 import com.example.rui12.myapplication.model.PhotoModel;
 import com.example.rui12.myapplication.model.ReviewModel;
 import com.example.rui12.myapplication.utils.CommonUtils;
@@ -23,7 +24,6 @@ import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -48,8 +48,10 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_show_post);
 
         init();
-        setOnClickListener();
+        initNinePhoto();
+        initReviewRecycleView();
         initRefreshLayout();
+        setOnClickListener();
     }
 
     private NineGridImageViewAdapter<PhotoModel> mAdapter = new NineGridImageViewAdapter<PhotoModel>() {
@@ -103,7 +105,10 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         //设置顶部状态栏为白色
         commonUtils = new CommonUtils();
         commonUtils.setStatusBar(this);
+    }
 
+    //初始化九宫格图片
+    private void initNinePhoto(){
         //初始化nineGridImageView
         //设置nineGridImageView的adapter
         nineGridImageView.setAdapter(mAdapter);
@@ -113,25 +118,25 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
             photoModelList.add(new PhotoModel("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552967370&di=6ebcae298c8566760e18dc9efe750f92&src=http://i0.hdslb.com/bfs/article/d2c8ffd1fa0b36da92c11abea2ddc83e576fcf29.jpg",R.drawable.bg2));
         }
         nineGridImageView.setImagesData(photoModelList);
-        nineGridImageView.setVisibility(View.GONE);
+    }
 
+    //初始化评论区的recyclerView
+    private void initReviewRecycleView(){
         //初始化评论区
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<ReviewModel> reviewModelList = new ArrayList<>();
         for(int i=0;i<5;i++){
             reviewModelList.add(new ReviewModel("奥利奥","卧槽，666，你是真的牛鼻",null,50));
         }
-        recyclerView.setAdapter(new RecyclerViewReviewAdapter(this,reviewModelList));
+        recyclerView.setAdapter(new ReviewAdapter(this,reviewModelList));
         recyclerView.setHasFixedSize(true);
 //        recyclerView.setNestedScrollingEnabled(false);
         //设置分界线
         recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
     }
 
+    //初始化上拉加载
     private void initRefreshLayout(){
         smartRefreshLayout.setEnableRefresh(false);//是否启用下拉刷新功能
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -143,16 +148,24 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
     private void setOnClickListener(){
-//        back.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-//            case R.id.ib_back:
-//                finish();
-//                break;
+
         }
     }
 }

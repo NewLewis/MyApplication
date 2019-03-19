@@ -13,17 +13,16 @@ import com.example.rui12.myapplication.model.ReviewModel;
 import com.example.rui12.myapplication.view.CircleImageView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewReviewAdapter extends RecyclerView.Adapter<RecyclerViewReviewAdapter.ViewHolder> implements View.OnClickListener {
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> implements View.OnClickListener {
 
     private Context context;
     private List<ReviewModel> reviewModelList;
     private LayoutInflater mInflater;
     private OnItemClickListener mOnItemClickListener = null;
 
-    public RecyclerViewReviewAdapter(Context context, List<ReviewModel> reviewModelList) {
+    public ReviewAdapter(Context context, List<ReviewModel> reviewModelList) {
         super();
         this.context = context;
         this.reviewModelList = reviewModelList;
@@ -33,7 +32,7 @@ public class RecyclerViewReviewAdapter extends RecyclerView.Adapter<RecyclerView
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new RecyclerViewReviewAdapter.ViewHolder(mInflater.inflate(R.layout.item_review,viewGroup, false));
+        return new ReviewAdapter.ViewHolder(mInflater.inflate(R.layout.item_review,viewGroup, false));
     }
 
     @Override
@@ -59,11 +58,11 @@ public class RecyclerViewReviewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public static interface OnItemClickListener {
-        void onItemClick(View view, RecyclerViewReviewAdapter.ViewName VIEW, int position);
+        void onItemClick(View view, ReviewAdapter.ViewName VIEW, int position);
         void onItemLongClick(int position);
     }
 
-    public void setmOnItemClickListener(RecyclerViewReviewAdapter.OnItemClickListener onItemClickListener){
+    public void setmOnItemClickListener(ReviewAdapter.OnItemClickListener onItemClickListener){
         this.mOnItemClickListener = onItemClickListener;
     }
 
@@ -84,9 +83,9 @@ public class RecyclerViewReviewAdapter extends RecyclerView.Adapter<RecyclerView
         }
 
         void setOnClickListener(){
-            itemView.setOnClickListener(RecyclerViewReviewAdapter.this);
-            username.setOnClickListener(RecyclerViewReviewAdapter.this);
-            header.setOnClickListener(RecyclerViewReviewAdapter.this);
+            itemView.setOnClickListener(ReviewAdapter.this);
+            username.setOnClickListener(ReviewAdapter.this);
+            header.setOnClickListener(ReviewAdapter.this);
         }
     }
 

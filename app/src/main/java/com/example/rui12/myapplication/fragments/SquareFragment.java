@@ -1,21 +1,36 @@
 package com.example.rui12.myapplication.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.example.rui12.myapplication.R;
-import com.example.rui12.myapplication.adapter.FragmentAdapter;
+import com.example.rui12.myapplication.ShowPostActivity;
+import com.example.rui12.myapplication.adapter.DreamPostAdapter;
+import com.example.rui12.myapplication.model.DreamModel;
+import com.example.rui12.myapplication.utils.CommonUtils;
+import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +49,12 @@ public class SquareFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+
+    private RecyclerView mRecyclerView;
+    private RefreshLayout refreshLayout;
+
+    final List<DreamModel> items = new ArrayList<>();
+    static final int ITEMS = 9;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,36 +94,59 @@ public class SquareFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_square, container, false);
-        init(view);
+        initRefreshLayout(view);
+        initRecycleView(view);
         return view;
     }
 
-    private void init(View view){
-        viewPager = view.findViewById(R.id.viewpager);
-        initViewPager(view);
-    }
-
-    private void initViewPager(View view){
-        tabLayout = view.findViewById(R.id.tabLayout);
-        List<String> titles = new ArrayList<>();
-        titles.add("自力更生");
-        titles.add("互帮互助");
-
-        for(int i=0;i<titles.size();i++){
-            tabLayout.addTab(tabLayout.newTab().setText(titles.get(i)));
+    //初始化recyclerView
+    private void initRecycleView(View view){
+        mRecyclerView=view.findViewById(R.id.recyclerView);
+        for (int i=0;i<ITEMS;i++){
+            items.add(new DreamModel());
         }
-        List<Fragment> fragments = new ArrayList<>();
-//        for(int i=0;i<titles.size();i++){
-//            fragments.add(new RecyclerViewFragment1());
-//        }
-        fragments.add(new RecyclerViewFragment1());
-        fragments.add(new RecyclerViewFragment2());
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getChildFragmentManager(),fragments,titles);
-        //给viewpager设置适配器
-        viewPager.setAdapter(fragmentAdapter);
-        //将tabLayout和viewpager关联起来
-        tabLayout.setupWithViewPager(viewPager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+        //初始化一个adapter
+        DreamPostAdapter dreamPostAdapter = new DreamPostAdapter(getActivity(),items,2);
+        //设置adapter的点击事件
+        dreamPostAdapter.setmOnItemClickListener(new DreamPostAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onItemClick: 点击了item:" + position);
+                Intent intent = new Intent(getActivity(), ShowPostActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+                Toast.makeText(getContext(),"长按了item:" + position,Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onItemLongClick: 长按了item:" + position);
+            }
+        });
+        mRecyclerView.setAdapter(dreamPostAdapter);
     }
+
+    private void initRefreshLayout(View view){
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
+                Toast.makeText(getContext(),"我正在下拉刷新",Toast.LENGTH_SHORT).show();
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
+                Toast.makeText(getContext(),"我正在上拉加载",Toast.LENGTH_SHORT).show();
+                refreshlayout.finishLoadMore(2000);//传入false表示加载失败
+            }
+        });
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

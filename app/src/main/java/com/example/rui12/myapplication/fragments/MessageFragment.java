@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.rui12.myapplication.R;
-import com.example.rui12.myapplication.adapter.RecyclerViewMessageAdapter;
+import com.example.rui12.myapplication.adapter.MessageAdapter;
 import com.example.rui12.myapplication.model.MessageModel;
-import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+import com.example.rui12.myapplication.utils.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,10 +93,10 @@ public class MessageFragment extends Fragment {
                     "问酥肉test_name",
                     "我好想你啊"));
         }
-        RecyclerViewMessageAdapter recyclerViewMessageAdapter = new RecyclerViewMessageAdapter(getActivity(),messageModels);
-        recyclerViewMessageAdapter.setmOnItemClickListener(new RecyclerViewMessageAdapter.OnItemClickListener() {
+        MessageAdapter messageAdapter = new MessageAdapter(getActivity(),messageModels);
+        messageAdapter.setmOnItemClickListener(new MessageAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, RecyclerViewMessageAdapter.ViewName viewName,int position) {
+            public void onItemClick(View view, MessageAdapter.ViewName viewName, int position) {
                 switch (view.getId()){
                     case R.id.civ_header:
                         Toast.makeText(getContext(),"点击了头像:" + position,Toast.LENGTH_SHORT).show();
@@ -118,7 +118,8 @@ public class MessageFragment extends Fragment {
         //设置布局格式
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //给recyclerView设置adapter
-        recyclerView.setAdapter(recyclerViewMessageAdapter);
+        recyclerView.setAdapter(messageAdapter);
+        recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

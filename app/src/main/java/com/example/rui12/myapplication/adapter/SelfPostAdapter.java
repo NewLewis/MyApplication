@@ -16,13 +16,13 @@ import com.example.rui12.myapplication.utils.CommonUtils;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> implements View.OnClickListener{
+public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHolder> implements View.OnClickListener{
     private Context context;
     private OnItemClickListener mOnItemClickListener;
     private List<PostModel> postModelList;
     private LayoutInflater mInflater;
 
-    public PostAdapter(Context context,List<PostModel> postModelList) {
+    public SelfPostAdapter(Context context, List<PostModel> postModelList) {
         super();
         this.context = context;
         this.postModelList = postModelList;
@@ -32,8 +32,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
 
     @NonNull
     @Override
-    public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new PostAdapter.ViewHolder(mInflater.inflate(R.layout.item_mypost,viewGroup, false));
+    public SelfPostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new SelfPostAdapter.ViewHolder(mInflater.inflate(R.layout.item_mypost,viewGroup, false));
     }
 
     @Override
@@ -47,16 +47,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
     }
 
     public static interface OnItemClickListener {
-        void onItemClick(View view, PostAdapter.ViewName VIEW, int position);
+        void onItemClick(View view, SelfPostAdapter.ViewName VIEW, int position);
         void onItemLongClick(int position);
     }
 
-    public void setmOnItemClickListener(PostAdapter.OnItemClickListener onItemClickListener){
+    public void setmOnItemClickListener(SelfPostAdapter.OnItemClickListener onItemClickListener){
         this.mOnItemClickListener = onItemClickListener;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PostAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final SelfPostAdapter.ViewHolder viewHolder, int position) {
         viewHolder.dream_name.setText(postModelList.get(position).getDream_name());
         //根据status设置显示样式
         if(postModelList.get(position).getDream_status() == (new PostModel()).Success){
@@ -89,7 +89,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
             circle = itemView.findViewById(R.id.circle);
             dream_status = itemView.findViewById(R.id.dream_status);
 
-            itemView.setOnClickListener(PostAdapter.this);
+            itemView.setOnClickListener(SelfPostAdapter.this);
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
-import com.example.rui12.myapplication.adapter.PostAdapter;
+import com.example.rui12.myapplication.adapter.SelfPostAdapter;
 import com.example.rui12.myapplication.model.PostModel;
 import com.example.rui12.myapplication.utils.AppBarStateChangeListener;
 import com.example.rui12.myapplication.utils.CommonUtils;
@@ -109,9 +108,9 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
         for(int i=1;i<=9;i++){
             postModelList.add(new PostModel("插本广美成功^_^","2019-02-0" + i,i%3));
         }
-        PostAdapter postAdapter = new PostAdapter(getActivity(),postModelList);
+        SelfPostAdapter selfPostAdapter = new SelfPostAdapter(getActivity(),postModelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(postAdapter);
+        recyclerView.setAdapter(selfPostAdapter);
 
         //设置appbarLayout的监听事件
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {

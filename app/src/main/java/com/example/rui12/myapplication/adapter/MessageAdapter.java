@@ -3,12 +3,10 @@ package com.example.rui12.myapplication.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.model.MessageModel;
@@ -18,14 +16,14 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerViewMessageAdapter.ViewHolder> implements View.OnClickListener{
+public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> implements View.OnClickListener{
 
     private LayoutInflater mInflater;
     private List<MessageModel> messageModelList;
     private Context context;
     private OnItemClickListener mOnItemClickListener = null;
 
-    public RecyclerViewMessageAdapter(Context context, List<MessageModel> messageModelList) {
+    public MessageAdapter(Context context, List<MessageModel> messageModelList) {
         super();
         this.context = context;
         this.messageModelList = messageModelList;
@@ -35,7 +33,7 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new RecyclerViewMessageAdapter.ViewHolder(mInflater.inflate(R.layout.item_message,viewGroup, false));
+        return new MessageAdapter.ViewHolder(mInflater.inflate(R.layout.item_message,viewGroup, false));
     }
 
     @Override
@@ -77,7 +75,7 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
         void onItemLongClick(int position);
     }
 
-    public void setmOnItemClickListener(RecyclerViewMessageAdapter.OnItemClickListener onItemClickListener){
+    public void setmOnItemClickListener(MessageAdapter.OnItemClickListener onItemClickListener){
         this.mOnItemClickListener = onItemClickListener;
     }
 
@@ -97,8 +95,8 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<RecyclerVie
         }
         //设置子view的点击事件
         void setOnClickListener(){
-            itemView.setOnClickListener(RecyclerViewMessageAdapter.this);
-            circleImageView.setOnClickListener(RecyclerViewMessageAdapter.this);
+            itemView.setOnClickListener(MessageAdapter.this);
+            circleImageView.setOnClickListener(MessageAdapter.this);
         }
     }
     @Override
