@@ -1,6 +1,7 @@
 package com.example.rui12.myapplication;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,10 @@ import com.example.rui12.myapplication.utils.CommonUtils;
 import com.example.rui12.myapplication.utils.RecycleViewDivider;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,6 +40,7 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
     private NineGridImageView<PhotoModel> nineGridImageView;
     private RecyclerView recyclerView;
     private CommonUtils commonUtils;
+    private SmartRefreshLayout smartRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
 
         init();
         setOnClickListener();
+        initRefreshLayout();
     }
 
     private NineGridImageViewAdapter<PhotoModel> mAdapter = new NineGridImageViewAdapter<PhotoModel>() {
@@ -83,6 +90,7 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         nineGridImageView = findViewById(R.id.nineGridImageView);
         recyclerView = findViewById(R.id.recyclerView);
         toolbar = findViewById(R.id.toolbar);
+        smartRefreshLayout = findViewById(R.id.refreshLayout);
 
         //设置toolbar上的返回键
         setSupportActionBar(toolbar);
@@ -108,13 +116,9 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         nineGridImageView.setVisibility(View.GONE);
 
         //初始化评论区
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
-            @Override
-            public boolean canScrollVertically() {
-                // 直接禁止垂直滑动
-                return false;
-            }
-        };
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
 
         List<ReviewModel> reviewModelList = new ArrayList<>();
@@ -122,7 +126,21 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
             reviewModelList.add(new ReviewModel("奥利奥","卧槽，666，你是真的牛鼻",null,50));
         }
         recyclerView.setAdapter(new RecyclerViewReviewAdapter(this,reviewModelList));
+        recyclerView.setHasFixedSize(true);
+//        recyclerView.setNestedScrollingEnabled(false);
+        //设置分界线
         recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
+    }
+
+    private void initRefreshLayout(){
+        smartRefreshLayout.setEnableRefresh(false);//是否启用下拉刷新功能
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
+                Toast.makeText(getApplicationContext(),"我正在上拉加载",Toast.LENGTH_SHORT).show();
+                refreshlayout.finishLoadMore(2000);//传入false表示加载失败
+            }
+        });
     }
 
     private void setOnClickListener(){
