@@ -4,7 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.adapter.FragmentAdapter;
 import com.example.rui12.myapplication.adapter.SelfPostAdapter;
 import com.example.rui12.myapplication.model.PostModel;
 import com.example.rui12.myapplication.utils.AppBarStateChangeListener;
@@ -44,6 +47,8 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
     private String mParam2;
     private RecyclerView recyclerView;
     private AppBarLayout appBarLayout;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
     private TextView title;
     private ImageButton ib_setting;
     private ImageButton ib_status;
@@ -99,20 +104,14 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
         ib_setting = view.findViewById(R.id.ib_setting);
         ib_status = view.findViewById(R.id.ib_status);
         title = view.findViewById(R.id.myself_title);
+        tabLayout = view.findViewById(R.id.tabs);
+        viewPager = view.findViewById(R.id.viewpager_layout);
 
 //        //初始化popupWindow
 //        initPopupWindow();
         setOnClickListener();
-
-        //设置recyclerView的adapter
-        List<PostModel> postModelList = new ArrayList<>();
-        for(int i=1;i<=9;i++){
-            postModelList.add(new PostModel("插本广美成功^_^","2019-02-0" + i,i%3));
-        }
-        SelfPostAdapter selfPostAdapter = new SelfPostAdapter(getActivity(),postModelList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(selfPostAdapter);
-        recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
+        //初始化ViewPager
+        initViewPager();
 
         //设置appbarLayout的监听事件
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -141,6 +140,26 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
                 }
             }
         });
+    }
+
+    private void initViewPager(){
+        //设置tabLayout的两种分类
+        List<String> titles = new ArrayList<>();
+        titles.add("公开心愿");
+        titles.add("私密心愿");
+        for(int i=0;i<titles.size();i++){
+            tabLayout.addTab(tabLayout.newTab().setText(titles.get(i)));
+        }
+
+        List<Fragment> fragments = new ArrayList<>();
+        for(int i=0;i<titles.size();i++){
+            fragments.add(new SelfPostFragment());
+        }
+
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getChildFragmentManager(),fragments,titles);
+        //给viewPager设置适配器
+        viewPager.setAdapter(fragmentAdapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setOnClickListener(){
