@@ -106,6 +106,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bt_float"
         android:layout_alignBottom="@id/frameLayout"
         android:layout_alignEnd="@id/frameLayout"
         android:layout_marginEnd="10dp"

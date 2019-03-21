@@ -1,6 +1,8 @@
 package com.example.rui12.myapplication;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView tv_myself;
     private CommonUtils commonUtils;
     private FragmentManager fm;
+    private FloatingActionButton bt_float;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements
         tv_square = findViewById(R.id.tv_square);
         tv_message = findViewById(R.id.tv_message);
         tv_myself = findViewById(R.id.tv_myself);
+        bt_float = findViewById(R.id.bt_float);
 
         //设置顶部状态栏为白色
         commonUtils = new CommonUtils();
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements
         tv_square.setOnClickListener(this);
         tv_message.setOnClickListener(this);
         tv_myself.setOnClickListener(this);
+        bt_float.setOnClickListener(this);
     }
 
     @Override
@@ -128,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements
                 tv_message.setTextColor(commonUtils.colorToInt(MainActivity.this,R.color.colorBlack));
                 iv_square.setBackground(commonUtils.toDrawable(MainActivity.this,R.drawable.square));
                 tv_square.setTextColor(commonUtils.colorToInt(MainActivity.this,R.color.colorBlack));
+                break;
+            case R.id.bt_float:
+                Intent intent = new Intent(this,PublishPostActivity.class);
+                startActivity(intent);
                 break;
         }
     }
