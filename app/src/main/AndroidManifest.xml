@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ShowPostActivity"></activity>
+        <activity android:name=".PublishPostActivity"></activity>
+        <activity android:name=".ShowPostActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>

@@ -20,6 +20,7 @@ import com.example.rui12.myapplication.adapter.SelfPostAdapter;
 import com.example.rui12.myapplication.model.PostModel;
 import com.example.rui12.myapplication.utils.AppBarStateChangeListener;
 import com.example.rui12.myapplication.utils.CommonUtils;
+import com.example.rui12.myapplication.utils.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,7 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
         SelfPostAdapter selfPostAdapter = new SelfPostAdapter(getActivity(),postModelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(selfPostAdapter);
+        recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
 
         //设置appbarLayout的监听事件
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {

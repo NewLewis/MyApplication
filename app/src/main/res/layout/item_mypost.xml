@@ -1,79 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:elevation="2dp">
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_marginStart="20dp"
-        android:layout_width="wrap_content"
+        android:layout_toStartOf="@id/first_image"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:elevation="2dp">
 
-        <View
-            android:layout_gravity="center"
-            android:layout_width="1dp"
-            android:background="@color/colorDarkGray"
-            android:layout_height="30dp"/>
+        <LinearLayout
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/circle"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            <TextView
+                android:id="@+id/publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03.02 09:25"/>
+
+            <ImageView
+                android:id="@+id/circle"
+                android:layout_marginStart="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_green"/>
+
+            <TextView
+                android:id="@+id/dream_status"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成"
+                android:textSize="12sp"
+                android:textColor="@color/green_teal"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_centerVertical="true"
-            android:background="@drawable/circle_green"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="让RecyclerView上面的部件跟随其一起滑动实现方法"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
 
-        <View
-            android:layout_gravity="center"
-            android:layout_width="1dp"
-            android:background="@color/colorDarkGray"
-            android:layout_height="30dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_like"
+                android:layout_marginStart="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ib_like"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/like_black"/>
+
+                <TextView
+                    android:id="@+id/tv_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="2.7k"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_review"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/ll_like"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ib_review"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:background="@drawable/xiaoxi" />
+
+                <TextView
+                    android:id="@+id/tv_review"
+                    android:layout_marginStart="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="28"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+    <ImageView
+        android:id="@+id/first_image"
         android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bg2"/>
 
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/dream_name"
-            android:maxEms="6"
-            android:maxLines="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="插本广美成功！"
-            android:textSize="20sp"
-            android:textColor="@color/colorBlack"/>
+</RelativeLayout>
 
-        <TextView
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/publish_time"
-            android:layout_below="@id/dream_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发布时间： 2018-02-06"
-            android:textSize="15sp"/>
-
-
-        <TextView
-            android:id="@+id/dream_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="实现"
-            android:textColor="@color/green_teal"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
-
-
-
-</android.support.v7.widget.CardView>

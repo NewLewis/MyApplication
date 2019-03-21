@@ -73,7 +73,7 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
             viewHolder.circle.setBackground((new CommonUtils()).toDrawable((Activity)context,R.drawable.circle_orange));
         }
         //设置发布时间
-        viewHolder.publish_time.setText("发布时间：2018-02-17");
+        viewHolder.publish_time.setText("2018-02-17");
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -84,7 +84,7 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            dream_name = itemView.findViewById(R.id.dream_name);
+            dream_name = itemView.findViewById(R.id.tv_title);
             publish_time = itemView.findViewById(R.id.publish_time);
             circle = itemView.findViewById(R.id.circle);
             dream_status = itemView.findViewById(R.id.dream_status);
