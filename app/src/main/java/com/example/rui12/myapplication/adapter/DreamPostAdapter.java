@@ -14,7 +14,7 @@ import com.example.rui12.myapplication.model.DreamModel;
 
 import java.util.List;
 
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+//import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHolder>{
     private LayoutInflater mInflater;
@@ -41,7 +41,7 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
         niHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: 绑定了点击事件");
+//                Log.d(TAG, "onClick: 绑定了点击事件");
                 mOnItemClickListener.onItemClick(niHolder.getAdapterPosition());
             }
         });
@@ -49,7 +49,7 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
         niHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Log.d(TAG, "onLongClick: 绑定了长按事件");
+//                Log.d(TAG, "onLongClick: 绑定了长按事件");
                 mOnItemClickListener.onItemLongClick(niHolder.getAdapterPosition());
                 return false;
             }

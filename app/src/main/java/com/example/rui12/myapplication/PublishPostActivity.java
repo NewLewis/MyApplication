@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,7 +24,7 @@ import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class PublishPostActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks,View.OnClickListener{
+public class PublishPostActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks,View.OnClickListener,BGASortableNinePhotoLayout.Delegate{
 
     private static final int PRC_PHOTO_PICKER = 1;
     private static final int RC_CHOOSE_PHOTO = 1;
@@ -29,6 +32,7 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
     private static final String EXTRA_MOMENT = "EXTRA_MOMENT";
 
     private CommonUtils commonUtils;
+    private Toolbar toolbar;
 
     //拖拽排序九宫格控件
     private BGASortableNinePhotoLayout mPhotosSnpl;
@@ -47,15 +51,25 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         commonUtils.setStatusBar(this);
         //初始化每个控件
         mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
+        toolbar = findViewById(R.id.toolbar);
+
+        //设置toolbar上的返回键
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
     }
 
     private void setOnClickListener(){
         mPhotosSnpl.setOnClickListener(this);
+        mPhotosSnpl.setDelegate(this);
     }
 
     @AfterPermissionGranted(PRC_PHOTO_PICKER)
     private void choicePhotoWrapper() {
-        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
             File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerTakePhoto");
@@ -70,6 +84,33 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         } else {
             EasyPermissions.requestPermissions(this, "图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照", PRC_PHOTO_PICKER, perms);
         }
+    }
+
+    @Override
+    public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
+        choicePhotoWrapper();
+    }
+
+    @Override
+    public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
+        mPhotosSnpl.removeItem(position);
+    }
+
+    @Override
+    public void onNinePhotoItemExchanged(BGASortableNinePhotoLayout sortableNinePhotoLayout, int fromPosition, int toPosition, ArrayList<String> models) {
+        Toast.makeText(this, "排序发生变化", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
+        Intent photoPickerPreviewIntent = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
+                .previewPhotos(models) // 当前预览的图片路径集合
+                .selectedPhotos(models) // 当前已选中的图片路径集合
+                .maxChooseCount(mPhotosSnpl.getMaxItemCount()) // 图片选择张数的最大值
+                .currentPosition(position) // 当前预览图片的索引
+                .isFromTakePhoto(false) // 是否是拍完照后跳转过来
+                .build();
+        startActivityForResult(photoPickerPreviewIntent, RC_PHOTO_PREVIEW);
     }
 
     @Override
@@ -97,6 +138,16 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         if (requestCode == PRC_PHOTO_PICKER) {
             Toast.makeText(this, "您拒绝了「图片选择」所需要的相关权限!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     @Override
