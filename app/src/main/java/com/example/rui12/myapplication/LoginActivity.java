@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +80,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register_content.setVisibility(View.GONE);
         //错误提示信息为不可见
         hint.setVisibility(View.INVISIBLE);
+        //设置在用户进行输入的时候,hint都不显示
+        hintHelper();
 
         //设置状态栏为白色
         CommonUtils commonUtils = new CommonUtils();
@@ -161,12 +165,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     });
                 }else if(LOGIN_STATUS == 2) {
+                    //短信验证码登录
                     final String phone_s = user_phone.getText().toString();
-                    String code_s = user_code.getText().toString();
+                    final String code_s = user_code.getText().toString();
 
                     //首先进行简单判断
                     if(phone_s.isEmpty()){
                         hint.setText("手机号不能为空");
+                        hint.setVisibility(View.VISIBLE);
+                        break;
+                    }
+
+                    if(!commonUtils.isPhoneLegal(phone_s)){
+                        hint.setText("手机号不合法");
+                        hint.setVisibility(View.VISIBLE);
+                        break;
+                    }
+
+                    if(code_s.length() != 6){
+                        hint.setText("验证码不符合格式要求");
                         hint.setVisibility(View.VISIBLE);
                         break;
                     }
@@ -205,8 +222,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.get_code:
-                Toast.makeText(getApplicationContext(),"点击了get_code",Toast.LENGTH_SHORT).show();
                 final String phone_s = user_phone.getText().toString();
+
+                if(!commonUtils.isPhoneLegal(phone_s)){
+                    hint.setText("手机号不合法");
+                    hint.setVisibility(View.VISIBLE);
+                    break;
+                }
 
                 BmobQuery<UserModel> bmobQuery = new BmobQuery<>();
                 bmobQuery.addWhereEqualTo("phone",phone_s);
@@ -264,6 +286,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
                 break;
         }
+    }
+
+    private void hintHelper(){
+        //设置在用户进行输入的时候,hint都不显示
+        user_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //todo
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hint.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //todo
+            }
+        });
+
+        user_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hint.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        user_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hint.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
