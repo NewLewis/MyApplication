@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         hint.setVisibility(View.VISIBLE);
                         break;
                     }
-                    
+
                     BmobQuery<UserModel> bmobQuery = new BmobQuery<>();
                     if (commonUtils.isPhoneLegal(username_s)){
                         //手机号
