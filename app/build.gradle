@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.rui12.myapplication"
         minSdkVersion 26
@@ -19,6 +20,8 @@ android {
 }
 
 dependencies {
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
@@ -50,4 +53,11 @@ dependencies {
     implementation 'pub.devrel:easypermissions:2.0.1'
     //switchButton的依赖
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    //Bmob云服务器的依赖
+    implementation 'cn.bmob.android:bmob-sdk:3.7.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.squareup.okio:okio:2.1.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 }
