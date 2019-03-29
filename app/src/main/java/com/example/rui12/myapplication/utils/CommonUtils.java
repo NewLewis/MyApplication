@@ -10,6 +10,7 @@ import java.util.regex.PatternSyntaxException;
 
 public class CommonUtils {
     final public String BmobAppId = "4276c0077d4b82c64a4e0143af404729";
+    private static String username = "";
 
     public void setStatusBar(Activity activity){
         //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding

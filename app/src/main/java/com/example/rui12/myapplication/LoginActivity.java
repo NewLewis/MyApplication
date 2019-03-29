@@ -3,6 +3,7 @@ package com.example.rui12.myapplication;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -152,6 +153,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if(e == null){
                                 Toast.makeText(getApplicationContext(),"共查询到"+list.size()+"条数据",Toast.LENGTH_SHORT).show();
                                 if(list.size() == 1){
+                                    //使用SharedPreferences将当前用户储存起来
+                                    SharedPreferences local_user = getSharedPreferences("local_user", 0);
+                                    SharedPreferences.Editor editor = local_user.edit();
+                                    editor.putString("username",list.get(0).getUsername());
+                                    editor.putString("phone",list.get(0).getPhone());
+                                    editor.commit();
+
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -211,6 +219,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }
                                     });
                                 }
+
+                                //使用SharedPreferences将当前用户储存起来
+                                SharedPreferences local_user = getSharedPreferences("local_user", 0);
+                                SharedPreferences.Editor editor = local_user.edit();
+                                editor.putString("username","user"+phone_s);
+                                editor.putString("phone",phone_s);
+                                editor.commit();
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -286,6 +302,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
                 break;
         }
+    }
+
+    private void initDb(){
+
     }
 
     private void hintHelper(){

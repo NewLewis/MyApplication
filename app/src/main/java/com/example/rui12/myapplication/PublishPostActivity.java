@@ -2,6 +2,7 @@ package com.example.rui12.myapplication;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -10,9 +11,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rui12.myapplication.model.DreamModel;
+import com.example.rui12.myapplication.model.DreamModel1;
 import com.example.rui12.myapplication.utils.CommonUtils;
+import com.example.rui12.myapplication.utils.PictureUtil;
+import com.suke.widget.SwitchButton;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,6 +29,10 @@ import java.util.List;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -33,6 +45,11 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
 
     private CommonUtils commonUtils;
     private Toolbar toolbar;
+    private TextView publish;
+    private EditText title;
+    private EditText content;
+    private SwitchButton switchButton;
+    private ProgressBar progressBar;
 
     //拖拽排序九宫格控件
     private BGASortableNinePhotoLayout mPhotosSnpl;
@@ -52,6 +69,11 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         //初始化每个控件
         mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
         toolbar = findViewById(R.id.toolbar);
+        publish = findViewById(R.id.tv_publish);
+        title = findViewById(R.id.et_title);
+        content = findViewById(R.id.et_content);
+        switchButton = findViewById(R.id.bt_switch);
+        progressBar = findViewById(R.id.progressBar);
 
         //设置toolbar上的返回键
         setSupportActionBar(toolbar);
@@ -65,6 +87,7 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
     private void setOnClickListener(){
         mPhotosSnpl.setOnClickListener(this);
         mPhotosSnpl.setDelegate(this);
+        publish.setOnClickListener(this);
     }
 
     @AfterPermissionGranted(PRC_PHOTO_PICKER)
@@ -119,6 +142,74 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
             case R.id.snpl_moment_add_photos:
                 Toast.makeText(getApplicationContext(),"点击了图片选择",Toast.LENGTH_SHORT).show();
                 choicePhotoWrapper();
+                break;
+            case R.id.tv_publish:
+                //发布dream
+                SharedPreferences local_user= getSharedPreferences("local_user", 0);
+                final String user = local_user.getString("username","");
+
+                final String title_s = title.getText().toString();
+                final String content_s = content.getText().toString();
+
+                //将图片文件传送到bmob云服务器
+                List<String> images = mPhotosSnpl.getData();
+
+                final String[] filepaths = new String[images.size()];
+                PictureUtil pictureUtil = new PictureUtil();
+
+                for(int i=0;i<images.size();i++){
+                    pictureUtil.saveTmpPicture(pictureUtil.getSmallBitmap(images.get(i)),PublishPostActivity.this,filepaths,i);
+                }
+
+                for(String s: filepaths){
+                    System.out.println(s);
+                }
+
+                if(images.size() != 0){
+                    BmobFile.uploadBatch(filepaths, new UploadBatchListener() {
+                        @Override
+                        public void onSuccess(List<BmobFile> list, List<String> urls) {
+                            if(urls.size()==filepaths.length){//如果数量相等，则代表文件全部上传完成
+                                //do something
+                                Toast.makeText(getApplicationContext(),"图片上传成功",Toast.LENGTH_SHORT).show();
+                                DreamModel1 dreamModel1 = new DreamModel1(urls,user,title_s,content_s,switchButton.isChecked(),0);
+                                dreamModel1.save(new SaveListener<String>() {
+                                    @Override
+                                    public void done(String s, BmobException e) {
+                                        if(e == null){
+                                            Toast.makeText(getApplicationContext(),"dream保存成功",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {
+                            //1、curIndex--表示当前第几个文件正在上传
+                            //2、curPercent--表示当前上传文件的进度值（百分比）
+                            //3、total--表示总的上传文件数
+                            //4、totalPercent--表示总的上传进度（百分比）
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+
+                        }
+                    });
+                }else{
+                    DreamModel1 dreamModel1 = new DreamModel1(null,user,title_s,content_s,switchButton.isChecked(),0);
+                    dreamModel1.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if(e == null){
+                                Toast.makeText(getApplicationContext(),"dream保存成功",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
                 break;
         }
     }
