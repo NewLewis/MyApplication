@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.ShowPostActivity;
 import com.example.rui12.myapplication.adapter.DreamPostAdapter;
 import com.example.rui12.myapplication.model.DreamModel;
-import com.example.rui12.myapplication.utils.CommonUtils;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -29,6 +26,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -45,6 +46,7 @@ public class SquareFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    static int hasLoaded = 0;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -102,14 +104,12 @@ public class SquareFragment extends Fragment {
     //初始化recyclerView
     private void initRecycleView(View view){
         mRecyclerView=view.findViewById(R.id.recyclerView);
-        for (int i=0;i<ITEMS;i++){
-            items.add(new DreamModel());
-        }
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         //初始化一个adapter
-        DreamPostAdapter dreamPostAdapter = new DreamPostAdapter(getActivity(),items,2);
+        final DreamPostAdapter dreamPostAdapter = new DreamPostAdapter(getActivity(),items,2);
         //设置adapter的点击事件
         dreamPostAdapter.setmOnItemClickListener(new DreamPostAdapter.OnItemClickListener() {
             @Override
@@ -127,6 +127,20 @@ public class SquareFragment extends Fragment {
             }
         });
         mRecyclerView.setAdapter(dreamPostAdapter);
+
+        BmobQuery<DreamModel> query = new BmobQuery<>();
+        query.setLimit(20).setSkip(hasLoaded).findObjects(new FindListener<DreamModel>() {
+            @Override
+            public void done(List<DreamModel> list, BmobException e) {
+                if(e == null){
+                    Toast.makeText(getContext(),"查询到"+list.size()+"条心愿",Toast.LENGTH_SHORT).show();
+                    items.addAll(list);
+                    dreamPostAdapter.notifyDataSetChanged();
+                }else{
+                    Log.d("Bmob","查询数据失败");
+                }
+            }
+        });
     }
 
     private void initRefreshLayout(View view){

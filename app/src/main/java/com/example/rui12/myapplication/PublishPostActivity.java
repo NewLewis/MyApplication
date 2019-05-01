@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rui12.myapplication.model.DreamModel;
-import com.example.rui12.myapplication.model.DreamModel1;
 import com.example.rui12.myapplication.utils.CommonUtils;
 import com.example.rui12.myapplication.utils.PictureUtil;
 import com.suke.widget.SwitchButton;
@@ -48,7 +47,10 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
     private TextView publish;
     private EditText title;
     private EditText content;
-    private SwitchButton switchButton;
+    private SwitchButton bt_set_private;
+    private SwitchButton bt_diary;
+    private SwitchButton bt_account;
+    private SwitchButton bt_clock;
     private ProgressBar progressBar;
 
     //拖拽排序九宫格控件
@@ -72,7 +74,10 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         publish = findViewById(R.id.tv_publish);
         title = findViewById(R.id.et_title);
         content = findViewById(R.id.et_content);
-        switchButton = findViewById(R.id.bt_switch);
+        bt_set_private = findViewById(R.id.bt_set_private);
+        bt_account = findViewById(R.id.bt_account);
+        bt_clock = findViewById(R.id.bt_clock);
+        bt_diary = findViewById(R.id.bt_diary);
         progressBar = findViewById(R.id.progressBar);
 
         //设置toolbar上的返回键
@@ -157,13 +162,14 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
                 final String[] filepaths = new String[images.size()];
                 PictureUtil pictureUtil = new PictureUtil();
 
+                //亚索图片质量，并返回压缩后图片的储存地址信息
                 for(int i=0;i<images.size();i++){
                     pictureUtil.saveTmpPicture(pictureUtil.getSmallBitmap(images.get(i)),PublishPostActivity.this,filepaths,i);
                 }
 
-                for(String s: filepaths){
-                    System.out.println(s);
-                }
+//                for(String s: filepaths){
+//                    System.out.println(s);
+//                }
 
                 if(images.size() != 0){
                     BmobFile.uploadBatch(filepaths, new UploadBatchListener() {
@@ -172,12 +178,21 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
                             if(urls.size()==filepaths.length){//如果数量相等，则代表文件全部上传完成
                                 //do something
                                 Toast.makeText(getApplicationContext(),"图片上传成功",Toast.LENGTH_SHORT).show();
-                                DreamModel1 dreamModel1 = new DreamModel1(urls,user,title_s,content_s,switchButton.isChecked(),0);
-                                dreamModel1.save(new SaveListener<String>() {
+//                                DreamModel dreamModel = new DreamModel(urls,user,title_s,content_s,switchButton.isChecked(),0);
+
+                                //删除临时图片文件
+                                for (String s:filepaths){
+                                    commonUtils.delete(s);
+                                }
+
+                                //新建post信息
+                                DreamModel dreamModel = new DreamModel(urls,user,title_s,content_s,bt_set_private.isChecked(),0,getToolsNum(),0,0);
+                                dreamModel.save(new SaveListener<String>() {
                                     @Override
                                     public void done(String s, BmobException e) {
                                         if(e == null){
-                                            Toast.makeText(getApplicationContext(),"dream保存成功",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(),"发布成功",Toast.LENGTH_SHORT).show();
+                                            finish();
                                         }
                                     }
                                 });
@@ -200,12 +215,13 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
                         }
                     });
                 }else{
-                    DreamModel1 dreamModel1 = new DreamModel1(null,user,title_s,content_s,switchButton.isChecked(),0);
-                    dreamModel1.save(new SaveListener<String>() {
+                    DreamModel dreamModel = new DreamModel(null,user,title_s,content_s,bt_set_private.isChecked(),0);
+                    dreamModel.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if(e == null){
-                                Toast.makeText(getApplicationContext(),"dream保存成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"发布成功",Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         }
                     });
@@ -253,5 +269,12 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         } else if (requestCode == RC_PHOTO_PREVIEW) {
             mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
         }
+    }
+
+    private int getToolsNum(){
+        int a = bt_account.isChecked() ? 4 : 0;
+        int b = bt_clock.isChecked() ? 2 : 0;
+        int c = bt_diary.isChecked() ? 1 : 0;
+        return a + b + c;
     }
 }

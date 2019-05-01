@@ -93,7 +93,76 @@
             android:textColor="@color/colorBlack"/>
 
         <com.suke.widget.SwitchButton
-            android:id="@+id/bt_switch"
+            android:id="@+id/bt_set_private"
+            android:layout_alignParentEnd="true"
+            app:sb_checked_color="@color/colorOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="记事本工具"
+            android:textColor="@color/colorBlack"/>
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/bt_diary"
+            android:layout_alignParentEnd="true"
+            app:sb_checked_color="@color/colorOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="账本工具"
+            android:textColor="@color/colorBlack"/>
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/bt_account"
+            android:layout_alignParentEnd="true"
+            app:sb_checked_color="@color/colorOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="打卡表工具"
+            android:textColor="@color/colorBlack"/>
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/bt_clock"
             android:layout_alignParentEnd="true"
             app:sb_checked_color="@color/colorOrange"
             android:layout_width="wrap_content"

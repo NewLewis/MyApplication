@@ -1,42 +1,116 @@
 package com.example.rui12.myapplication.model;
 
+import android.content.Intent;
+
 import com.example.rui12.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DreamModel {
-    private List<PhotoModel> photoModelList;
-    private String user_name;
+import cn.bmob.v3.BmobObject;
 
-    public DreamModel(List<PhotoModel> photoModelList, String user_name) {
-        this.photoModelList = photoModelList;
-        this.user_name = user_name;
+public class DreamModel extends BmobObject {
+    private List<String> images;
+    private String user;
+    private String title;
+    private String content;
+    private Boolean status;
+    private Integer process;
+    private Integer tools;
+    private Integer num_of_laud;
+    private Integer num_of_review;
+
+    public DreamModel(List<String> images, String user, String title, String content, Boolean status, Integer tools) {
+        this.images = images;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.status = status;
+        this.tools = tools;
     }
 
-    public DreamModel(){
-        this.photoModelList = new ArrayList<>();
-        int num = (new Random()).nextInt(9);
-        for(int i=0;i<num;i++){
-            this.photoModelList.add(new PhotoModel("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551278455584&di=ee0d5c823701f0c34caff3210d40481b&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2017-10-25%2F59f082092c082.jpg", R.drawable.header));
-        }
-        this.user_name = "Oreo for test!";
+    public DreamModel(List<String> images, String user, String title, String content, Boolean status, Integer process, Integer tools, Integer num_of_laud, Integer num_of_review) {
+        this.images = images;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.status = status;
+        this.process = process;
+        this.tools = tools;
+        this.num_of_laud = num_of_laud;
+        this.num_of_review = num_of_review;
     }
 
-    public List<PhotoModel> getPhotoModelList() {
-        return photoModelList;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setPhotoModelList(List<PhotoModel> photoModelList) {
-        this.photoModelList = photoModelList;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUser() {
+        return user;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Integer getProcess() {
+        return process;
+    }
+
+    public void setProcess(Integer process) {
+        this.process = process;
+    }
+
+    public Integer getTools() {
+        return tools;
+    }
+
+    public void setTools(Integer tools) {
+        this.tools = tools;
+    }
+
+    public Integer getNum_of_laud() {
+        return num_of_laud;
+    }
+
+    public void setNum_of_laud(Integer num_of_laud) {
+        this.num_of_laud = num_of_laud;
+    }
+
+    public Integer getNum_of_review() {
+        return num_of_review;
+    }
+
+    public void setNum_of_review(Integer num_of_review) {
+        this.num_of_review = num_of_review;
     }
 }

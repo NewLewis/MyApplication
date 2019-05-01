@@ -6,8 +6,9 @@ public class UserModel extends BmobObject {
     private String username;
     private String phone;
     private String password;
-    private String token;
     private String sex;
+    private String avatar;
+    private String age;
 
     public UserModel(String username, String phone, String password) {
         this.username = username;
@@ -39,19 +40,27 @@ public class UserModel extends BmobObject {
         this.password = password;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getSex() {
         return sex;
     }
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }

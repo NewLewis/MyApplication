@@ -108,7 +108,6 @@
                 <TextView
                     android:id="@+id/tv_content"
                     android:layout_below="@id/tv_title"
-                    android:layout_toStartOf="@id/iv_image"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
