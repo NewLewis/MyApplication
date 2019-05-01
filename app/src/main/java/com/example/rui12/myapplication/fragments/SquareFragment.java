@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 
@@ -56,6 +57,7 @@ public class SquareFragment extends Fragment {
     private RefreshLayout refreshLayout;
 
     final List<DreamModel> items = new ArrayList<>();
+    DreamPostAdapter dreamPostAdapter;
     static final int ITEMS = 9;
 
     private OnFragmentInteractionListener mListener;
@@ -108,16 +110,25 @@ public class SquareFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
+
         //初始化一个adapter
-        final DreamPostAdapter dreamPostAdapter = new DreamPostAdapter(getActivity(),items,2);
+        dreamPostAdapter = new DreamPostAdapter(getActivity(),items,2);
+
         //设置adapter的点击事件
         dreamPostAdapter.setmOnItemClickListener(new DreamPostAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onItemClick: 点击了item:" + position);
-                Intent intent = new Intent(getActivity(), ShowPostActivity.class);
-                startActivity(intent);
+            public void onItemClick(View view, DreamPostAdapter.ViewName viewName,int position) {
+                Toast.makeText(getContext(),"switch外点击了Item", Toast.LENGTH_SHORT).show();
+                switch (view.getId()){
+                    case R.id.civ_header:
+                        Toast.makeText(getContext(),"点击了头像:" + position,Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onItemClick: 点击了头像:" + position);
+                        break;
+                    default:
+                        Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onItemClick: 点击了item:" + position);
+                        break;
+                }
             }
 
             @Override
@@ -129,13 +140,14 @@ public class SquareFragment extends Fragment {
         mRecyclerView.setAdapter(dreamPostAdapter);
 
         BmobQuery<DreamModel> query = new BmobQuery<>();
-        query.setLimit(20).setSkip(hasLoaded).findObjects(new FindListener<DreamModel>() {
+        query.setLimit(20).setSkip(hasLoaded).order("-createdAt").findObjects(new FindListener<DreamModel>() {
             @Override
             public void done(List<DreamModel> list, BmobException e) {
                 if(e == null){
                     Toast.makeText(getContext(),"查询到"+list.size()+"条心愿",Toast.LENGTH_SHORT).show();
                     items.addAll(list);
                     dreamPostAdapter.notifyDataSetChanged();
+                    hasLoaded += list.size();
                 }else{
                     Log.d("Bmob","查询数据失败");
                 }
@@ -143,19 +155,51 @@ public class SquareFragment extends Fragment {
         });
     }
 
+    //下拉刷新和上拉加载
     private void initRefreshLayout(View view){
         refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
-                Toast.makeText(getContext(),"我正在下拉刷新",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),"我正在下拉刷新",Toast.LENGTH_SHORT).show();
+
+                BmobQuery<DreamModel> query = new BmobQuery<>();
+                query.setLimit(20).setSkip(0).order("-createdAt").findObjects(new FindListener<DreamModel>() {
+                    @Override
+                    public void done(List<DreamModel> list, BmobException e) {
+                        if(e == null){
+                            Toast.makeText(getContext(),"查询到"+list.size()+"条心愿",Toast.LENGTH_SHORT).show();
+                            items.clear();
+                            items.addAll(list);
+                            dreamPostAdapter.notifyDataSetChanged();
+                            hasLoaded = list.size();
+                        }else{
+                            Log.d("Bmob","查询数据失败");
+                        }
+                    }
+                });
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
-                Toast.makeText(getContext(),"我正在上拉加载",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),"我正在上拉加载",Toast.LENGTH_SHORT).show();
+
+                BmobQuery<DreamModel> query = new BmobQuery<>();
+                query.setLimit(20).setSkip(hasLoaded).order("-createdAt").findObjects(new FindListener<DreamModel>() {
+                    @Override
+                    public void done(List<DreamModel> list, BmobException e) {
+                        if(e == null){
+                            Toast.makeText(getContext(),"查询到"+list.size()+"条心愿",Toast.LENGTH_SHORT).show();
+                            items.addAll(list);
+                            dreamPostAdapter.notifyDataSetChanged();
+                            hasLoaded += list.size();
+                        }else{
+                            Log.d("Bmob","查询数据失败");
+                        }
+                    }
+                });
                 refreshlayout.finishLoadMore(2000);//传入false表示加载失败
             }
         });

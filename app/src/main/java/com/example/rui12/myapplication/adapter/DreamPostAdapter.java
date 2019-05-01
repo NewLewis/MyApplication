@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import cn.bmob.v3.listener.FindListener;
 
 //import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
-public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHolder>{
+public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHolder> implements View.OnClickListener{
     private LayoutInflater mInflater;
     private List<DreamModel> dreamModelList;
     private OnItemClickListener mOnItemClickListener = null;
@@ -43,27 +44,46 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
         return dreamModelList.size();
     }
 
+    public static interface OnItemClickListener {
+        void onItemClick(View view,ViewName VIEW,int position);
+        void onItemLongClick(int position);
+    }
+
+    //用一个枚举类型来表示不同的view
+    public enum ViewName{
+        ITEM,
+        HEADER,
+        COLLECT,
+        LIKE
+    }
+
+    @Override
+    public void onClick(View v){
+        int position = (int)v.getTag();
+        switch (v.getId()){
+            case R.id.civ_header:
+                //这是头像的点击事件
+                mOnItemClickListener.onItemClick(v,ViewName.HEADER,position);
+                break;
+            case R.id.ib_collect:
+                //收藏按钮的点击事件
+                mOnItemClickListener.onItemClick(v,ViewName.COLLECT,position);
+                break;
+            case R.id.ib_like:
+                //点赞按钮的点击事件
+                mOnItemClickListener.onItemClick(v,ViewName.LIKE,position);
+                break;
+            default:
+                //默认是整个item的点击事件
+                mOnItemClickListener.onItemClick(v,ViewName.ITEM,position);
+                break;
+        }
+    }
+
     @NonNull
     @Override
     public NIHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
         final NIHolder niHolder = new NIHolder(mInflater.inflate(R.layout.item_dream_post, parent, false));
-        //为item设置点击事件
-        niHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.d(TAG, "onClick: 绑定了点击事件");
-                mOnItemClickListener.onItemClick(niHolder.getAdapterPosition());
-            }
-        });
-
-        niHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                Log.d(TAG, "onLongClick: 绑定了长按事件");
-                mOnItemClickListener.onItemLongClick(niHolder.getAdapterPosition() );
-                return false;
-            }
-        });
         return niHolder;
     }
 
@@ -99,7 +119,7 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
                     Picasso
                             .with(context)
                             .load(list.get(0).getAvatar())
-                            .placeholder(R.drawable.bg2)
+                            .placeholder(R.drawable.bk_gray)
                             .into(holder.header);
 
                 }else{
@@ -113,22 +133,22 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
             Picasso
                     .with(context)
                     .load(dreamModelList.get(position).getImages().get(0))
-                    .placeholder(R.drawable.bg2)
+                    .placeholder(R.drawable.bk_gray)
                     .into(holder.first_image);
         }else{
             holder.first_image.setVisibility(View.GONE);
         }
 
+        ///设置点击事件需要用到的view的tag
+        holder.header.setTag(position);
+        holder.itemView.setTag(position);
+        holder.ib_like.setTag(position);
+        holder.ib_collect.setTag(position);
     }
 
     public void remove(int position){
         dreamModelList.remove(position);
         notifyItemRemoved(position);
-    }
-
-    public static interface OnItemClickListener {
-        void onItemClick(int position);
-        void onItemLongClick(int position);
     }
 
     public void setmOnItemClickListener(OnItemClickListener onItemClickListener){
@@ -144,6 +164,8 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
         private TextView num_like;
         private TextView num_review;
         private ImageView first_image;
+        private ImageButton ib_collect;
+        private ImageButton ib_like;
 
         NIHolder(View itemView) {
             super(itemView);
@@ -155,6 +177,18 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
             num_like = itemView.findViewById(R.id.tv_like);
             num_review = itemView.findViewById(R.id.tv_review);
             first_image = itemView.findViewById(R.id.iv_first_image);
+            ib_collect = itemView.findViewById(R.id.ib_collect);
+            ib_like = itemView.findViewById(R.id.ib_like);
+
+            setOnClickListener();
+        }
+
+        //设置子view的点击事件
+        void setOnClickListener(){
+            itemView.setOnClickListener(DreamPostAdapter.this);
+            header.setOnClickListener(DreamPostAdapter.this);
+            ib_collect.setOnClickListener(DreamPostAdapter.this);
+            ib_like.setOnClickListener(DreamPostAdapter.this);
         }
     }
 }

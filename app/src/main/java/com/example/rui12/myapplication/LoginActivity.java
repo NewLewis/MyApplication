@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Bmob.initialize(this,commonUtils.BmobAppId);
         init();
+        autoLogin();
         setOnClickListener();
     }
 
@@ -87,6 +88,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //设置状态栏为白色
         CommonUtils commonUtils = new CommonUtils();
         commonUtils.setStatusBar(this);
+    }
+
+    private void autoLogin(){
+        SharedPreferences local_user = getSharedPreferences("local_user", 0);
+        String username = local_user.getString("username",null);
+        String password = local_user.getString("password",null);
+
+        if(username != null && password != null){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void setOnClickListener(){
@@ -125,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(LOGIN_STATUS == 1){
                     //账号密码登录
                     String username_s = user_name.getText().toString();
-                    String password_s = user_password.getText().toString();
+                    final String password_s = user_password.getText().toString();
 
                     //将密码进行md5加密
                     MD5Util md5Util = new MD5Util();
@@ -157,8 +170,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     SharedPreferences local_user = getSharedPreferences("local_user", 0);
                                     SharedPreferences.Editor editor = local_user.edit();
                                     editor.putString("username",list.get(0).getUsername());
+                                    editor.putString("password",list.get(0).getPassword());
                                     editor.putString("phone",list.get(0).getPhone());
-                                    editor.commit();
+                                    editor.apply();
 
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
