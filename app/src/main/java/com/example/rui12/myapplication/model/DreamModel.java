@@ -21,6 +21,9 @@ public class DreamModel extends BmobObject {
     private Integer num_of_laud;
     private Integer num_of_review;
 
+    public DreamModel() {
+    }
+
     public DreamModel(List<String> images, String user, String title, String content, Boolean status, Integer tools) {
         this.images = images;
         this.user = user;

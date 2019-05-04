@@ -2,6 +2,7 @@ package com.example.rui12.myapplication.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,8 @@ import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.ShowPostActivity;
 import com.example.rui12.myapplication.adapter.DreamPostAdapter;
 import com.example.rui12.myapplication.model.DreamModel;
+import com.example.rui12.myapplication.model.LaudModel;
+import com.example.rui12.myapplication.utils.CommonUtils;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -31,6 +34,8 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -55,6 +60,7 @@ public class SquareFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RefreshLayout refreshLayout;
+    private CommonUtils commonUtils;
 
     final List<DreamModel> items = new ArrayList<>();
     DreamPostAdapter dreamPostAdapter;
@@ -98,6 +104,7 @@ public class SquareFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_square, container, false);
+        commonUtils = new CommonUtils();
         initRefreshLayout(view);
         initRecycleView(view);
         return view;
@@ -117,16 +124,67 @@ public class SquareFragment extends Fragment {
         //设置adapter的点击事件
         dreamPostAdapter.setmOnItemClickListener(new DreamPostAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, DreamPostAdapter.ViewName viewName,int position) {
+            public void onItemClick(final View view, DreamPostAdapter.ViewName viewName, final int position) {
                 Toast.makeText(getContext(),"switch外点击了Item", Toast.LENGTH_SHORT).show();
                 switch (view.getId()){
-                    case R.id.civ_header:
-                        Toast.makeText(getContext(),"点击了头像:" + position,Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onItemClick: 点击了头像:" + position);
-                        break;
+//                    case R.id.civ_header:
+//                        Toast.makeText(getContext(),"点击了头像:" + position,Toast.LENGTH_SHORT).show();
+//                        Log.d(TAG, "onItemClick: 点击了头像:" + position);
+//                        break;
+//                    case R.id.ib_like:
+//                        //找到用户名
+//                        final SharedPreferences local_user = getActivity().getSharedPreferences("local_user", 0);
+//                        final String username = local_user.getString("username",null);
+//
+//                        //查询是否已经被点赞
+//                        BmobQuery<LaudModel> bmobQuery = new BmobQuery<>();
+//                        bmobQuery.addWhereEqualTo("username",username).addWhereEqualTo("dreamID",items.get(position).getObjectId()).findObjects(new FindListener<LaudModel>() {
+//                            @Override
+//                            public void done(List<LaudModel> list, BmobException e) {
+//                                if(list.isEmpty()){
+//                                    view.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.like_orange));
+//                                    LaudModel laudModel = new LaudModel(username,items.get(position).getObjectId());
+//                                    laudModel.save(new SaveListener<String>() {
+//                                        @Override
+//                                        public void done(String s, BmobException e) {
+//                                            Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    });
+//                                }else{
+//                                    view.setBackground(commonUtils.toDrawable(getActivity(),R.drawable.like_black));
+//                                    LaudModel laudModel = new LaudModel();
+//                                    laudModel.setObjectId(list.get(0).getObjectId());
+//                                    laudModel.delete(new UpdateListener() {
+//                                        @Override
+//                                        public void done(BmobException e) {
+//                                            Toast.makeText(getContext(),"取消点赞",Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    });
+//
+//                                    DreamModel dreamModel = new DreamModel();
+//                                    final int t = Integer.valueOf(num_like.getText().toString()) - 1;
+//                                    dreamModel.setNum_of_laud(t);
+//
+//                                    dreamModel.update(dreamID, new UpdateListener() {
+//                                        @Override
+//                                        public void done(BmobException e) {
+//                                            if(e == null){
+//                                                num_like.setText(t);
+//                                            }else{
+//                                                Toast.makeText(getApplicationContext(),"更新失败",Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        }
+//                                    });
+//                                }
+//                            }
+//                        });
+//                        break;
                     default:
-                        Toast.makeText(getContext(),"点击了item:" + position,Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onItemClick: 点击了item:" + position);
+                        Intent intent = new Intent(getActivity(),ShowPostActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id",items.get(position).getObjectId());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
                 }
             }

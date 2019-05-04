@@ -1,6 +1,8 @@
 package com.example.rui12.myapplication.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,10 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.ShowPostActivity;
+import com.example.rui12.myapplication.model.CollectModel;
 import com.example.rui12.myapplication.model.DreamModel;
+import com.example.rui12.myapplication.model.LaudModel;
 import com.example.rui12.myapplication.model.UserModel;
+import com.example.rui12.myapplication.utils.CommonUtils;
 import com.example.rui12.myapplication.view.CircleImageView;
 import com.squareup.picasso.Picasso;
 
@@ -24,6 +31,8 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 //import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
@@ -32,6 +41,7 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
     private List<DreamModel> dreamModelList;
     private OnItemClickListener mOnItemClickListener = null;
     private Context context;
+    private CommonUtils commonUtils = new CommonUtils();
 
     public DreamPostAdapter(Context context, List<DreamModel> dreamModelList, int showStyle) {
         super();
@@ -138,6 +148,34 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
         }else{
             holder.first_image.setVisibility(View.GONE);
         }
+
+        SharedPreferences local_user = context.getSharedPreferences("local_user",0);
+        String username = local_user.getString("username",null);
+
+        //查询是否已经被点赞
+        BmobQuery<LaudModel> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("username",username).addWhereEqualTo("dreamID",dreamModelList.get(position).getObjectId()).findObjects(new FindListener<LaudModel>() {
+            @Override
+            public void done(List<LaudModel> list, BmobException e) {
+                if(!list.isEmpty()){
+                    holder.ib_like.setBackground(commonUtils.toDrawable((Activity) context,R.drawable.like_orange));
+                }else{
+                    holder.ib_like.setBackground(commonUtils.toDrawable((Activity) context,R.drawable.like_black));
+                }
+            }
+        });
+
+        BmobQuery<CollectModel> bmobQuery1 = new BmobQuery<>();
+        bmobQuery1.addWhereEqualTo("username",username).addWhereEqualTo("dreamID",dreamModelList.get(position).getObjectId()).findObjects(new FindListener<CollectModel>() {
+            @Override
+            public void done(List<CollectModel> list, BmobException e) {
+                if(!list.isEmpty()){
+                    holder.ib_collect.setBackground(commonUtils.toDrawable((Activity) context,R.drawable.collect_orange));
+                }else{
+                    holder.ib_collect.setBackground(commonUtils.toDrawable((Activity) context,R.drawable.collect_black));
+                }
+            }
+        });
 
         ///设置点击事件需要用到的view的tag
         holder.header.setTag(position);
