@@ -21,7 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".PublishReviewActivity"></activity>
+        <activity android:name=".ConversationActivity"></activity>
+        <activity android:name=".AdviceActivity" />
+        <activity android:name=".EditInfoActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PublishReviewActivity" />
         <activity android:name=".PublishPostActivity" />
         <activity android:name=".ShowPostActivity" />
         <activity android:name=".LoginActivity" />
@@ -36,7 +40,7 @@
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.example.rui12.myapplication.BmobContentProvider"></provider>
+            android:authorities="com.example.rui12.myapplication.BmobContentProvider" />
     </application>
 
 </manifest>

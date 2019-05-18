@@ -165,4 +165,11 @@ public class CommonUtils {
         }
     }
 
+    public String encryp_phone(String phone){
+        String s1 = phone.substring(0,3);
+        String s2 = "****";
+        String s3 = phone.substring(7,11);
+        return s1 + s2 + s3;
+    }
+
 }

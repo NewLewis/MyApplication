@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConversationActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TestName2"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentStart="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/colorDarkGray">
+    </View>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <EditText
+        android:id="@+id/et_edit"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edit_bg"
+        android:layout_toStartOf="@id/ib_commit"
+        android:layout_above="@id/rl_bottom"/>
+
+    <ImageButton
+        android:id="@+id/ib_commit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/up"
+        android:layout_above="@id/rl_bottom"
+        android:layout_alignParentEnd="true"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:id="@+id/ib_take_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/yuan"/>
+
+        <ImageButton
+            android:id="@+id/ib_select_photo"
+            android:layout_marginEnd="27dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/zhaopian"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/ib_take_photo"/>
+
+        <ImageButton
+            android:id="@+id/ib_yuyin"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/yuyin"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/ib_take_photo"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

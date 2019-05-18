@@ -1,6 +1,7 @@
 package com.example.rui12.myapplication.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -18,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.SettingActivity;
 import com.example.rui12.myapplication.adapter.FragmentAdapter;
 import com.example.rui12.myapplication.adapter.SelfPostAdapter;
 import com.example.rui12.myapplication.model.PostModel;
@@ -164,6 +166,7 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
 
     private void setOnClickListener(){
         ib_status.setOnClickListener(this);
+        ib_setting.setOnClickListener(this);
     }
 
     //显示popupWindow
@@ -179,6 +182,9 @@ public class MyselfFragment extends Fragment implements View.OnClickListener{
             case R.id.ib_status: //选项按钮被点击
                 showPopupWindow();
                 break;
+            case R.id.ib_setting:
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
             default:
                 break;
         }

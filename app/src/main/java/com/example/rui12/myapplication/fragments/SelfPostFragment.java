@@ -16,6 +16,8 @@ import com.example.rui12.myapplication.utils.RecycleViewDivider;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.annotations.Nullable;
+
 
 public class SelfPostFragment extends Fragment {
 
@@ -34,8 +36,9 @@ public class SelfPostFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@Nullable LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_self_post, container, false);
@@ -49,7 +52,7 @@ public class SelfPostFragment extends Fragment {
         //设置recyclerView的adapter
         List<PostModel> postModelList = new ArrayList<>();
         for(int i=1;i<=9;i++){
-            postModelList.add(new PostModel("插本广美成功^_^","2019-02-0" + i,i%3));
+            postModelList.add(new PostModel("插本广美成功^_^","2019-02-01" + i,i%3));
         }
         SelfPostAdapter selfPostAdapter = new SelfPostAdapter(getActivity(),postModelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

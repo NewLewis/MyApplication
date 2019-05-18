@@ -6,7 +6,7 @@ public class UserModel extends BmobObject {
     private String username;
     private String phone;
     private String password;
-    private String sex;
+    private Boolean sex;
     private String avatar;
     private String age;
 
@@ -14,6 +14,10 @@ public class UserModel extends BmobObject {
         this.username = username;
         this.phone = phone;
         this.password = password;
+    }
+
+    public UserModel(){
+
     }
 
     public String getUsername() {
@@ -40,11 +44,11 @@ public class UserModel extends BmobObject {
         this.password = password;
     }
 
-    public String getSex() {
+    public Boolean getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
