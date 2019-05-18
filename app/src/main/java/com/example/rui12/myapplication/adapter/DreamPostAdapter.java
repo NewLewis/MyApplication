@@ -138,7 +138,7 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
             }
         });
 
-        if(!dreamModelList.get(position).getImages().isEmpty()){
+        if(dreamModelList.get(position).getImages() != null){
             holder.first_image.setVisibility(View.VISIBLE);
             Picasso
                     .with(context)

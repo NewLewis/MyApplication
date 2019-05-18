@@ -216,6 +216,9 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
                     });
                 }else{
                     DreamModel dreamModel = new DreamModel(null,user,title_s,content_s,bt_set_private.isChecked(),0);
+                    dreamModel.setProcess(0);
+                    dreamModel.setNum_of_laud(0);
+                    dreamModel.setNum_of_review(0);
                     dreamModel.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
@@ -277,4 +280,6 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
         int c = bt_diary.isChecked() ? 1 : 0;
         return a + b + c;
     }
+
+
 }

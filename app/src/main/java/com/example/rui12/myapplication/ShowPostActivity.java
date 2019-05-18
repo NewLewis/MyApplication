@@ -2,8 +2,10 @@ package com.example.rui12.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +44,8 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import static cn.bmob.newim.core.BmobIMClient.getContext;
+
 public class ShowPostActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar toolbar;
@@ -63,6 +67,8 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
     private CommonUtils commonUtils;
     private SmartRefreshLayout smartRefreshLayout;
     private List<PhotoModel> photoModelList = new ArrayList<>();
+    private List<ReviewModel> reviewModelList = new ArrayList<>();
+    ReviewAdapter reviewAdapter;
 
     private String dreamID;
 
@@ -73,6 +79,7 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
 
         Bundle bundle = getIntent().getExtras();
         dreamID = bundle.getString("id",null);
+        System.out.println("id:"+dreamID);
 
         init();
         initDreamPost();
@@ -158,9 +165,13 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
                     postTime.setText(dreamModel.getCreatedAt());
                     postContent.setText(dreamModel.getContent());
                     postTitle.setText(dreamModel.getTitle());
-                    for(String s:dreamModel.getImages()){
-                        photoModelList.add(new PhotoModel(s,R.drawable.bk_gray));
+
+                    if(dreamModel.getImages() != null){
+                        for(String s:dreamModel.getImages()){
+                            photoModelList.add(new PhotoModel(s,R.drawable.bk_gray));
+                        }
                     }
+
                     if(!photoModelList.isEmpty()){
                         nineGridImageView.setVisibility(View.VISIBLE);
                     }else{
@@ -234,17 +245,29 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
     //初始化评论区的recyclerView
     private void initReviewRecycleView(){
         //初始化评论区
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<ReviewModel> reviewModelList = new ArrayList<>();
-        for(int i=0;i<5;i++){
-            reviewModelList.add(new ReviewModel("奥利奥","卧槽，666，你是真的牛鼻",null,50));
-        }
-        recyclerView.setAdapter(new ReviewAdapter(this,reviewModelList));
+        reviewAdapter = new ReviewAdapter(this,reviewModelList);
+        recyclerView.setAdapter(reviewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 //        recyclerView.setNestedScrollingEnabled(false);
         //设置分界线
         recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
+
+        BmobQuery<ReviewModel> query = new BmobQuery<>();
+        query.addWhereEqualTo("dreamID",dreamID).order("-createdAt").findObjects(new FindListener<ReviewModel>() {
+            @Override
+            public void done(List<ReviewModel> list, BmobException e) {
+                if(e == null){
+//                    Toast.makeText(getApplicationContext(),"查询到"+list.size()+"条心愿",Toast.LENGTH_SHORT).show();
+//                    reviewModelList.clear();
+                    reviewModelList.addAll(list);
+                    reviewAdapter.notifyDataSetChanged();
+                }else{
+                    Log.d("Bmob","查询数据失败"+e.toString());
+                }
+            }
+        });
     }
 
     //初始化上拉加载
@@ -373,7 +396,21 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
                 });
                 break;
             case R.id.ib_review:
+                Intent intent = new Intent(ShowPostActivity.this,PublishReviewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("DreamID",dreamID);
+                bundle.putString("toSb",null);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        String result = data.getExtras().getString("result");//得到新Activity 关闭后返回的数据
+        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        if(result.equals("init")){
+            initReviewRecycleView();
         }
     }
 }

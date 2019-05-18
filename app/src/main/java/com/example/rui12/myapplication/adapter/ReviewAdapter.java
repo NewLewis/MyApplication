@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
@@ -38,13 +39,24 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.username.setText(reviewModelList.get(i).getUsername());
-        viewHolder.content.setText(reviewModelList.get(i).getReviewContent());
-        viewHolder.num_zan.setText(String.valueOf(reviewModelList.get(i).getNum_zan()));
+        viewHolder.content.setText(reviewModelList.get(i).getContent());
+        viewHolder.num_zan.setText(String.valueOf(reviewModelList.get(i).getNum_of_laud()));
+
+        if(reviewModelList.get(i).getToSb().isEmpty()){
+            viewHolder.toOther.setVisibility(View.GONE);
+        }else{
+            viewHolder.toOther.setVisibility(View.VISIBLE);
+            viewHolder.toOther.setText("@" + reviewModelList.get(i).getToSb());
+        }
+
         Picasso
                 .with(context)
                 .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551290161697&di=b712005413d62e65be7c085ac8236573&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Farticle%2F2017%2F0110%2F091942_18858530.jpg")
                 .placeholder(R.drawable.bg2)
                 .into(viewHolder.header);
+
+        //设置tag
+        viewHolder.review.setTag(i);
     }
 
     @Override
@@ -54,7 +66,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     public enum ViewName{
         ITEM,
-        HEADER
+        REVIEW
     }
 
     public static interface OnItemClickListener {
@@ -71,6 +83,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         private TextView content;
         private TextView num_zan;
         private CircleImageView header;
+        private TextView toOther;
+        private ImageButton review;
+        private ImageButton ib_zan;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +94,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             header = itemView.findViewById(R.id.civ_header);
             num_zan = itemView.findViewById(R.id.tv_like);
 
+            toOther = itemView.findViewById(R.id.tv_other);
+            review = itemView.findViewById(R.id.ib_review);
+            ib_zan = itemView.findViewById(R.id.ib_like);
+
             setOnClickListener();
         }
 
@@ -86,11 +105,25 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             itemView.setOnClickListener(ReviewAdapter.this);
             username.setOnClickListener(ReviewAdapter.this);
             header.setOnClickListener(ReviewAdapter.this);
+            toOther.setOnClickListener(ReviewAdapter.this);
+            review.setOnClickListener(ReviewAdapter.this);
+            ib_zan.setOnClickListener(ReviewAdapter.this);
         }
     }
 
     @Override
     public void onClick(View v) {
+        int position = (int)v.getTag();
+        switch (v.getId()){
+            case R.id.ib_review:
+                //这是头像的点击事件
+                mOnItemClickListener.onItemClick(v, ViewName.REVIEW,position);
+                break;
 
+            default:
+                //默认是整个item的点击事件
+                mOnItemClickListener.onItemClick(v, ViewName.ITEM,position);
+                break;
+        }
     }
 }

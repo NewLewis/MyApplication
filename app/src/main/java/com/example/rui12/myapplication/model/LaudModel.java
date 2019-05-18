@@ -11,9 +11,6 @@ public class LaudModel extends BmobObject {
         this.dreamID = dreamID;
     }
 
-    public LaudModel() {
-    }
-
     public String getUsername() {
         return username;
     }
