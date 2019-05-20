@@ -5,8 +5,8 @@ public class PostModel {
     private String publish_time;
     private int dream_status;
     public final int Success = 1;
-    public final int Fail = 0;
-    public final int Process = 2;
+    public final int Fail = -1;
+    public final int Process = 0;
 
     public PostModel(){
 

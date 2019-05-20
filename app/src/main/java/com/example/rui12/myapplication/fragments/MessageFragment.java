@@ -88,10 +88,10 @@ public class MessageFragment extends Fragment {
 
         //添加message样例
         List<MessageModel> messageModels = new ArrayList<>();
-        for(int i=0;i<5;i++){
+        for(int i=0;i<1;i++){
             messageModels.add(new MessageModel("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551290161697&di=b712005413d62e65be7c085ac8236573&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Farticle%2F2017%2F0110%2F091942_18858530.jpg",
-                    "问酥肉test_name",
-                    "我好想你啊"));
+                    "TestName1",
+                    "你好"));
         }
         MessageAdapter messageAdapter = new MessageAdapter(getActivity(),messageModels);
         messageAdapter.setmOnItemClickListener(new MessageAdapter.OnItemClickListener() {

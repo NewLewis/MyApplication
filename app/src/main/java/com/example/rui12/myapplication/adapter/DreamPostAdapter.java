@@ -126,12 +126,11 @@ public class DreamPostAdapter extends RecyclerView.Adapter<DreamPostAdapter.NIHo
             @Override
             public void done(List<UserModel> list, BmobException e) {
                 if(e == null){
+                    Log.d("头像", "done: 加载头像"+list.get(0).getAvatar());
                     Picasso
                             .with(context)
                             .load(list.get(0).getAvatar())
-                            .placeholder(R.drawable.bk_gray)
                             .into(holder.header);
-
                 }else{
                     Log.d("Square","加载头像失败");
                 }

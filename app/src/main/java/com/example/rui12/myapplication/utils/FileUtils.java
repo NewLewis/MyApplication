@@ -20,7 +20,7 @@ public final class FileUtils {
             return path;
         }
         // 以 content:// 开头的，比如 content://media/extenral/images/media/17766
-        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme()) && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
             Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
@@ -34,7 +34,7 @@ public final class FileUtils {
             return path;
         }
         // 4.4及之后的 是以 content:// 开头的，比如 content://com.android.providers.media.documents/document/image%3A235700
-        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme()) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
             if (DocumentsContract.isDocumentUri(context, uri)) {
                 if (isExternalStorageDocument(uri)) {
                     // ExternalStorageProvider

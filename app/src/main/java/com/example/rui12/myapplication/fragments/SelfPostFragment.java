@@ -1,5 +1,6 @@
 package com.example.rui12.myapplication.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +11,16 @@ import android.view.ViewGroup;
 
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.adapter.SelfPostAdapter;
+import com.example.rui12.myapplication.model.DreamModel;
 import com.example.rui12.myapplication.model.PostModel;
 import com.example.rui12.myapplication.utils.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import io.reactivex.annotations.Nullable;
 
 
@@ -50,11 +55,24 @@ public class SelfPostFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
 
         //设置recyclerView的adapter
-        List<PostModel> postModelList = new ArrayList<>();
-        for(int i=1;i<=9;i++){
-            postModelList.add(new PostModel("插本广美成功^_^","2019-02-01" + i,i%3));
-        }
-        SelfPostAdapter selfPostAdapter = new SelfPostAdapter(getActivity(),postModelList);
+        final List<DreamModel> dreamModelList = new ArrayList<>();
+//        for(int i=1;i<=9;i++){
+//            postModelList.add(new PostModel("插本广美成功^_^","2019-02-01" + i,i%3));
+//        }
+
+        SharedPreferences local_user = getActivity().getSharedPreferences("local_user", 0);
+        String username = local_user.getString("username",null);
+
+        BmobQuery<DreamModel> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("user",username).addWhereEqualTo("status",false).order("-createdAt").findObjects(new FindListener<DreamModel>() {
+            @Override
+            public void done(List<DreamModel> list, BmobException e) {
+                if(e == null){
+                    dreamModelList.addAll(list);
+                }
+            }
+        });
+        SelfPostAdapter selfPostAdapter = new SelfPostAdapter(getActivity(),dreamModelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(selfPostAdapter);
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));

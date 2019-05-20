@@ -54,11 +54,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             viewHolder.ll_right.setVisibility(View.GONE);
             viewHolder.ll_left.setVisibility(View.VISIBLE);
             viewHolder.tv_left.setText(conversationModelList.get(i).getContent());
-            Picasso
-                    .with(context)
-                    .load(conversationModelList.get(i).getHeader())
-                    .placeholder(R.drawable.bk_gray)
-                    .into(viewHolder.left_header);
+            if(conversationModelList.get(i).getHeader() != null && !conversationModelList.get(i).getHeader().isEmpty()){
+                Picasso
+                        .with(context)
+                        .load(conversationModelList.get(i).getHeader())
+                        .placeholder(R.drawable.bk_gray)
+                        .into(viewHolder.left_header);
+            }
         }else{
             viewHolder.ll_left.setVisibility(View.GONE);
             viewHolder.ll_right.setVisibility(View.VISIBLE);

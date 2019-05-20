@@ -167,9 +167,9 @@ public class PublishPostActivity extends AppCompatActivity implements EasyPermis
                     pictureUtil.saveTmpPicture(pictureUtil.getSmallBitmap(images.get(i)),PublishPostActivity.this,filepaths,i);
                 }
 
-//                for(String s: filepaths){
-//                    System.out.println(s);
-//                }
+                for(String s: filepaths){
+                    System.out.println("上传"+ s);
+                }
 
                 if(images.size() != 0){
                     BmobFile.uploadBatch(filepaths, new UploadBatchListener() {

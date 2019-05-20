@@ -60,6 +60,8 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
     private TextView num_review2; //评论区的评论数量
     private TextView num_like;
     private ImageButton like;
+    private ImageButton tool;
+    private ImageButton edit;
     private ImageButton collect;
     private ImageButton review;
     private NineGridImageView<PhotoModel> nineGridImageView;
@@ -136,6 +138,9 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         like = findViewById(R.id.ib_like);
         collect = findViewById(R.id.ib_collect);
         review = findViewById(R.id.ib_review);
+        tool = findViewById(R.id.ib_tool);
+        edit = findViewById(R.id.ib_edit);
+
 
         //设置toolbar上的返回键
         setSupportActionBar(toolbar);
@@ -144,6 +149,8 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
+
+        nineGridImageView.setAdapter(mAdapter);
 
         //设置顶部状态栏为白色
         commonUtils = new CommonUtils();
@@ -168,12 +175,20 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
 
                     if(dreamModel.getImages() != null){
                         for(String s:dreamModel.getImages()){
+                            Log.d("图片", "done: " + s);
                             photoModelList.add(new PhotoModel(s,R.drawable.bk_gray));
                         }
                     }
 
+                    Picasso
+                            .with(getApplicationContext())
+                            .load("http://img1.imgtn.bdimg.com/it/u=281710409,2677816040&fm=26&gp=0.jpg")
+                            .into(imageHeader);
+
                     if(!photoModelList.isEmpty()){
                         nineGridImageView.setVisibility(View.VISIBLE);
+                        nineGridImageView.setImagesData(photoModelList);
+
                     }else{
                         nineGridImageView.setVisibility(View.GONE);
                     }
@@ -233,13 +248,13 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
     private void initNinePhoto(){
         //初始化nineGridImageView
         //设置nineGridImageView的adapter
-        nineGridImageView.setAdapter(mAdapter);
-        //设置nineGridImageView的图片资源
-
-//        for(int i=0;i<9;i++){
-//            photoModelList.add(new PhotoModel("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552967370&di=6ebcae298c8566760e18dc9efe750f92&src=http://i0.hdslb.com/bfs/article/d2c8ffd1fa0b36da92c11abea2ddc83e576fcf29.jpg",R.drawable.bg2));
-//        }
-        nineGridImageView.setImagesData(photoModelList);
+//        nineGridImageView.setAdapter(mAdapter);
+//        //设置nineGridImageView的图片资源
+//
+////        for(int i=0;i<9;i++){
+////            photoModelList.add(new PhotoModel("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1552967370&di=6ebcae298c8566760e18dc9efe750f92&src=http://i0.hdslb.com/bfs/article/d2c8ffd1fa0b36da92c11abea2ddc83e576fcf29.jpg",R.drawable.bg2));
+////        }
+//        nineGridImageView.setImagesData(photoModelList);
     }
 
     //初始化评论区的recyclerView
@@ -296,6 +311,8 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
         like.setOnClickListener(ShowPostActivity.this);
         collect.setOnClickListener(ShowPostActivity.this);
         review.setOnClickListener(ShowPostActivity.this);
+        tool.setOnClickListener(ShowPostActivity.this);
+        edit.setOnClickListener(ShowPostActivity.this);
     }
 
     @Override
@@ -402,6 +419,15 @@ public class ShowPostActivity extends AppCompatActivity implements View.OnClickL
                 bundle.putString("toSb",null);
                 intent.putExtras(bundle);
                 startActivityForResult(intent,1);
+                break;
+            case R.id.ib_edit:
+                Intent intent1 = new Intent(this,DreamManagerActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.ib_tool:
+                Intent intent2 = new Intent(this,ToolsActivity.class);
+                startActivity(intent2);
+                break;
         }
     }
 

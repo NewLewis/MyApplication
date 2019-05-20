@@ -11,21 +11,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rui12.myapplication.R;
+import com.example.rui12.myapplication.model.DreamModel;
 import com.example.rui12.myapplication.model.PostModel;
 import com.example.rui12.myapplication.utils.CommonUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHolder> implements View.OnClickListener{
     private Context context;
     private OnItemClickListener mOnItemClickListener;
-    private List<PostModel> postModelList;
+    private List<DreamModel> dreamModelList;
     private LayoutInflater mInflater;
 
-    public SelfPostAdapter(Context context, List<PostModel> postModelList) {
+    public SelfPostAdapter(Context context, List<DreamModel> dreamModelList) {
         super();
         this.context = context;
-        this.postModelList = postModelList;
+        this.dreamModelList = dreamModelList;
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -38,7 +40,7 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return postModelList.size();
+        return dreamModelList.size();
     }
 
     //用一个枚举类型来表示不同的view
@@ -57,13 +59,13 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final SelfPostAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.dream_name.setText(postModelList.get(position).getDream_name());
+        viewHolder.dream_name.setText(dreamModelList.get(position).getTitle());
         //根据status设置显示样式
-        if(postModelList.get(position).getDream_status() == (new PostModel()).Success){
+        if(dreamModelList.get(position).getProcess() == (new PostModel()).Success){
             viewHolder.dream_status.setText("成功");
             viewHolder.dream_status.setTextColor((new CommonUtils()).colorToInt((Activity) context,R.color.green_teal));
             viewHolder.circle.setBackground((new CommonUtils()).toDrawable((Activity)context,R.drawable.circle_green));
-        }else if(postModelList.get(position).getDream_status() == (new PostModel()).Fail){
+        }else if(dreamModelList.get(position).getProcess() == (new PostModel()).Fail){
             viewHolder.dream_status.setText("失败");
             viewHolder.dream_status.setTextColor((new CommonUtils()).colorToInt((Activity)context,R.color.red));
             viewHolder.circle.setBackground((new CommonUtils()).toDrawable((Activity)context,R.drawable.circle_red));
@@ -73,7 +75,11 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
             viewHolder.circle.setBackground((new CommonUtils()).toDrawable((Activity)context,R.drawable.circle_orange));
         }
         //设置发布时间
-        viewHolder.publish_time.setText("2018-02-17");
+        viewHolder.publish_time.setText(dreamModelList.get(position).getCreatedAt());
+        viewHolder.tv_like.setText(""+dreamModelList.get(position).getNum_of_laud());
+        viewHolder.tv_review.setText("" + dreamModelList.get(position).getNum_of_review());
+
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -81,6 +87,9 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
         private TextView publish_time;
         private ImageView circle;
         private TextView dream_status;
+        private TextView tv_like;
+        private TextView tv_review;
+        private ImageView first_image;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +97,8 @@ public class SelfPostAdapter extends RecyclerView.Adapter<SelfPostAdapter.ViewHo
             publish_time = itemView.findViewById(R.id.publish_time);
             circle = itemView.findViewById(R.id.circle);
             dream_status = itemView.findViewById(R.id.dream_status);
+            tv_like = itemView.findViewById(R.id.tv_like);
+            tv_review = itemView.findViewById(R.id.tv_review);
 
             itemView.setOnClickListener(SelfPostAdapter.this);
         }

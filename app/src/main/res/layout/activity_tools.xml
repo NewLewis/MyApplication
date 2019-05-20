@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ToolsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工具"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentStart="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGray">
+
+            <TextView
+                android:id="@+id/tv_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="打卡表"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提醒时间:22:30"
+                android:textSize="15sp"
+                android:layout_below="@id/tv_clock"/>
+
+            <ImageButton
+                android:id="@+id/ib_clock_add"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/add_black"/>
+
+            <ImageButton
+                android:id="@+id/ib_clock_setting"
+                android:layout_marginEnd="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/ib_clock_add"
+                android:background="@drawable/setting_black"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打卡时间: 2019--05-19-:03:51"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGray">
+
+            <TextView
+                android:id="@+id/tv_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账本"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="目标金额:2000"
+                android:textSize="15sp"
+                android:layout_below="@id/tv_account"/>
+
+            <ImageButton
+                android:id="@+id/ib_account_add"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/add_black"/>
+
+            <ImageButton
+                android:id="@+id/ib_account_setting"
+                android:layout_marginEnd="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/ib_account_add"
+                android:background="@drawable/setting_black"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无账本记录"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGray">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日记本"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"/>
+
+            <ImageButton
+                android:id="@+id/ib_diary_add"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/add_black"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无日记"/>
+    </LinearLayout>
+
+</LinearLayout>

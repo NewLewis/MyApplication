@@ -17,6 +17,7 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 
+import com.example.rui12.myapplication.ConversationActivity;
 import com.example.rui12.myapplication.R;
 import com.example.rui12.myapplication.ShowPostActivity;
 import com.example.rui12.myapplication.adapter.DreamPostAdapter;
@@ -125,12 +126,13 @@ public class SquareFragment extends Fragment {
         dreamPostAdapter.setmOnItemClickListener(new DreamPostAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final View view, DreamPostAdapter.ViewName viewName, final int position) {
-                Toast.makeText(getContext(),"switch外点击了Item", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),"switch外点击了Item", Toast.LENGTH_SHORT).show();
                 switch (view.getId()){
-//                    case R.id.civ_header:
-//                        Toast.makeText(getContext(),"点击了头像:" + position,Toast.LENGTH_SHORT).show();
-//                        Log.d(TAG, "onItemClick: 点击了头像:" + position);
-//                        break;
+                    case R.id.civ_header:
+                        Intent intent1 = new Intent(getActivity(), ConversationActivity.class);
+                        startActivity(intent1);
+                        Log.d(TAG, "onItemClick: 点击了头像:" + position);
+                        break;
 //                    case R.id.ib_like:
 //                        //找到用户名
 //                        final SharedPreferences local_user = getActivity().getSharedPreferences("local_user", 0);

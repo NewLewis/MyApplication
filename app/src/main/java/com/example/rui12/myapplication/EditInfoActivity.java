@@ -161,10 +161,12 @@ public class EditInfoActivity extends AppCompatActivity implements View.OnClickL
                         if (yourChoice != -1) {
 //                            Toast.makeText(EditInfoActivity.this, "你选择了" + items[yourChoice], Toast.LENGTH_SHORT).show();
                             UserModel userModel = new UserModel();
-                            if(which == 0){
+                            if(which == 0){//男
                                 userModel.setSex(false);
-                            }else if(which == 1){
+                                tv_sex.setText("男");
+                            }else if(which == 1){//女
                                 userModel.setSex(true);
+                                tv_sex.setText("女");
                             }
 
                             userModel.update(id, new UpdateListener() {
@@ -205,10 +207,14 @@ public class EditInfoActivity extends AppCompatActivity implements View.OnClickL
         switch (requestCode) {
             case RC_CHOOSE_PHOTO:
                 if(data == null){
+                    System.out.println("空");
                     break;
                 }
                 Uri uri = data.getData();
                 String filePath = FileUtils.getFilePathByUri(this, uri);
+
+                System.out.println("头像url：" + uri);
+                System.out.println("头像filepaths：" + filePath);
 
                 if (filePath != null && !TextUtils.isEmpty(filePath)) {
 //                    RequestOptions requestOptions1 = new RequestOptions().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
@@ -217,10 +223,9 @@ public class EditInfoActivity extends AppCompatActivity implements View.OnClickL
                     PictureUtil pictureUtil = new PictureUtil();
                     final String[] filepaths = new String[1];
 
-
-
                     //亚索图片质量，并返回压缩后图片的储存地址信息
                     pictureUtil.saveTmpPicture(pictureUtil.getSmallBitmap(filePath),EditInfoActivity.this,filepaths,0);
+                    System.out.println("filepaths:" + filepaths[0]);
                     BmobFile.uploadBatch(filepaths, new UploadBatchListener() {
                         @Override
                         public void onSuccess(List<BmobFile> list, List<String> urls) {

@@ -21,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ConversationActivity"></activity>
+        <activity android:name=".ToolsActivity"></activity>
+        <activity android:name=".DreamManagerActivity" />
+        <activity android:name=".ConversationActivity" />
         <activity android:name=".AdviceActivity" />
         <activity android:name=".EditInfoActivity" />
         <activity android:name=".SettingActivity" />

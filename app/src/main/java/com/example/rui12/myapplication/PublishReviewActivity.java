@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rui12.myapplication.model.ReviewModel;
+import com.example.rui12.myapplication.utils.CommonUtils;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -42,6 +43,10 @@ public class PublishReviewActivity extends AppCompatActivity implements View.OnC
     }
 
     private void init(){
+
+        CommonUtils commonUtils = new CommonUtils();
+        commonUtils.setStatusBar(this);
+
         //设置toolbar上的返回键
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

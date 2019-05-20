@@ -55,6 +55,8 @@
         android:layout_marginEnd="10dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:hint="请输入聊天内容"
+        android:padding="5dp"
         android:background="@drawable/edit_bg"
         android:layout_toStartOf="@id/ib_commit"
         android:layout_above="@id/rl_bottom"/>
