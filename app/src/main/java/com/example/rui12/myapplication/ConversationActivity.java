@@ -92,19 +92,16 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ib_commit:
+                Log.d("发送", "onClick: " + editText.getText().toString());
                 if(!editText.getText().toString().isEmpty()){
                     String content = editText.getText().toString();
-                    ConversationModel conversationModel = new ConversationModel(content,null,2);
+                    ConversationModel conversationModel = new ConversationModel(content,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551290161697&di=b712005413d62e65be7c085ac8236573&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Farticle%2F2017%2F0110%2F091942_18858530.jpg",2);
                     conversationModelList.add(conversationModel);
                     conversationAdapter.notifyDataSetChanged();
-                    try{
-                        Thread.sleep(2000);
-                    }catch (Exception e ){
-                        e.printStackTrace();
-                    }
+
                     sendMsg();
                 }else{
-                    Toast.makeText(getApplicationContext(),"不能发送非空消息",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(),"不能发送非空消息",Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -117,11 +114,20 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void sendMsg(){
-        SharedPreferences local_user = getSharedPreferences("local_user", 0);
-        String header = local_user.getString("header",null);
-        ConversationModel conversationModel = new ConversationModel(items.get(status),header,1);
+        try{
+            Thread.sleep(2000);
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+//        SharedPreferences local_user = getSharedPreferences("local_user", 0);
+//        String header = local_user.getString("header",null);
+        Log.d("发送", "sendMsg: " + "已经到函数了1");
+        ConversationModel conversationModel = new ConversationModel(items.get(status),"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551290161697&di=b712005413d62e65be7c085ac8236573&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Farticle%2F2017%2F0110%2F091942_18858530.jpg",1);
+        Log.d("发送", "sendMsg: " + "已经到函数了2");
         conversationModelList.add(conversationModel);
+        Log.d("发送", "sendMsg: " + "已经到函数了3");
         conversationAdapter.notifyDataSetChanged();
+        Log.d("发送", "sendMsg: " + "已经到函数了4");
         status += 1;
     }
 
@@ -134,7 +140,5 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
         return true;
     }
-
-
 
 }

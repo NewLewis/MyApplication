@@ -15,6 +15,7 @@
         android:weightSum="1">
 
         <com.example.rui12.myapplication.view.CircleImageView
+            android:id="@+id/civ_header"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -23,7 +24,7 @@
         <TextView
             android:padding="10dp"
             android:id="@+id/left_msg"
-            android:maxWidth="300dp"
+            android:maxWidth="200dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -45,7 +46,7 @@
 
         <TextView
             android:id="@+id/right_msg"
-            android:maxWidth="300dp"
+            android:maxWidth="200dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

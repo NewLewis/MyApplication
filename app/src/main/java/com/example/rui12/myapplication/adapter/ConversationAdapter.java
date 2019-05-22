@@ -57,7 +57,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             if(conversationModelList.get(i).getHeader() != null && !conversationModelList.get(i).getHeader().isEmpty()){
                 Picasso
                         .with(context)
-                        .load(conversationModelList.get(i).getHeader())
+                        .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551290161697&di=b712005413d62e65be7c085ac8236573&imgtype=0&src=http%3A%2F%2Fpic.k73.com%2Fup%2Farticle%2F2017%2F0110%2F091942_18858530.jpg")
                         .placeholder(R.drawable.bk_gray)
                         .into(viewHolder.left_header);
             }
